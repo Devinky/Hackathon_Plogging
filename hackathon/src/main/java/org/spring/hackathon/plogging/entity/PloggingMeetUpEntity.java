@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "ploggingParty")
-public class PloggingPartyEntity extends BaseEntity {
+public class PloggingMeetUpEntity extends BaseEntity {
 
   //기본키
   @Id

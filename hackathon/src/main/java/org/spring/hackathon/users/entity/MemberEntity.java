@@ -1,7 +1,7 @@
 package org.spring.hackathon.users.entity;
 
 import lombok.*;
-import org.spring.hackathon.plogging.entity.PloggingPartyEntity;
+import org.spring.hackathon.plogging.entity.PloggingMeetUpEntity;
 import org.spring.hackathon.plogging.entity.PloggingRecordEntity;
 import org.spring.hackathon.security.role.Role;
 
@@ -63,6 +63,6 @@ public class MemberEntity extends BaseEntity {
   @OneToMany
   @JoinTable(name = "party_member_connect", joinColumns = @JoinColumn(name = "member_no"),
   inverseJoinColumns = @JoinColumn(name = "plogging_party_no"))
-  private List<PloggingPartyEntity> ploggingPartyEntities = new ArrayList<>();
+  private List<PloggingMeetUpEntity> ploggingPartyEntities = new ArrayList<>();
 
 }

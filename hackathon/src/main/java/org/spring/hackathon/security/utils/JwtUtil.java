@@ -7,7 +7,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
 public class JwtUtil {
-
   public static String createToken(String userName, String secretKey, Long expiredMs) {
 
     Claims claims = Jwts.claims(); //일종의 MAP(정보를 넣는다), 유저네임 저장 가능
