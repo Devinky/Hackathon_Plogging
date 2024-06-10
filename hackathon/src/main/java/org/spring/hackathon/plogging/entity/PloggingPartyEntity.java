@@ -1,12 +1,13 @@
 package org.spring.hackathon.plogging.entity;
 
 import lombok.*;
-import org.spring.hackathon.users.entity.BaseEntity;
+import org.spring.hackathon.baseTime.BaseEntity;
 import org.spring.hackathon.users.entity.MemberEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "ploggingParty")
-public class PloggingMeetUpEntity extends BaseEntity {
+public class PloggingPartyEntity extends BaseEntity {
+  
+  //단체 플로깅 기록 테이블
 
   //기본키
   @Id
@@ -25,9 +28,9 @@ public class PloggingMeetUpEntity extends BaseEntity {
   @Column(name = "ploggingPartyNo")
   public Long partyNo;
 
-  //방장 이름
-  @Column(nullable = false)
-  private String partyOwner;
+  //방장 이름 -> 연관관계 처리하기
+//  @Column(nullable = false)
+//  private String partyOwner;
 
   //방 이름
   @Column(nullable = false)
@@ -37,11 +40,12 @@ public class PloggingMeetUpEntity extends BaseEntity {
   @Column(nullable = false)
   private String partyPlace;
 
-  //시간
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm aa")
+  //예정 시간
+  //aa = am, pm 표기
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH aa")
   private SimpleDateFormat partyDate;
 
-  //참여 인원
+  //참여 인원 수
   @Column(nullable = false)
   private int partyEntry;
 
@@ -49,10 +53,28 @@ public class PloggingMeetUpEntity extends BaseEntity {
   @Column(length = 5000)
   private String partyIntro;
 
+  //시작 시간
+  @Column(nullable = false)
+  private LocalTime partyStart;
+
+  //종료 시간
+  @Column(nullable = false)
+  private LocalTime partyEnd;
+
+  //플로깅 진행 시간
+  @Column(nullable = false)
+  private String partyTime;
+  
+  //방장 정보 매핑
+  @ManyToOne
+  @JoinColumn(name = "member_pk")
+  private MemberEntity partyJoinMember;
+
   //플로깅 방과 회원 간의 N:M 관계를 해소해주는 연결 테이블 생성, 매핑
   @OneToMany
   @JoinTable(name = "party_member_connect", joinColumns = @JoinColumn(name = "plogging_party_no"),
   inverseJoinColumns = @JoinColumn(name = "member_no"))
   private List<MemberEntity> memberEntities = new ArrayList<>();
+  
 
 }

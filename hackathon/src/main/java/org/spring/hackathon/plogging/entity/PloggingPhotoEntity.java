@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.spring.hackathon.users.entity.BaseEntity;
+import org.spring.hackathon.baseTime.BaseEntity;
 
 import javax.persistence.*;
 

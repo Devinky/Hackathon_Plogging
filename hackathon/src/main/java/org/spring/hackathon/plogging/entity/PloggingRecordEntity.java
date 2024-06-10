@@ -1,7 +1,7 @@
 package org.spring.hackathon.plogging.entity;
 
 import lombok.*;
-import org.spring.hackathon.users.entity.BaseEntity;
+import org.spring.hackathon.baseTime.BaseEntity;
 import org.spring.hackathon.users.entity.MemberEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,6 +19,8 @@ import java.util.List;
 @Table(name = "ploggingRecord")
 public class PloggingRecordEntity extends BaseEntity {
 
+  //개인 플로깅 기록 테이블
+
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,14 +31,14 @@ public class PloggingRecordEntity extends BaseEntity {
   @Column(nullable = false)
   private int ploggingDistance;
 
-  //플로깅 기록에 입력하는 주운 쓰레기 종류(여러 종류 받을 수 있는 거 같아서 리스트 타입으로 지정했어요)
+  //플로깅 기록에 입력하는 주운 쓰레기 종류(여러 종류 받을 수 있는 거 같아서 리스트 타입으로 지정함)
   private ArrayList<String> trashCategory;
 
   //플로깅 한 날짜
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDateTime ploggingDate;
 
-  //플로깅을 몇 시간 했는지
+  //플로깅을 몇시간 했는지
   private String ploggingTime;
 
   //이미지 첨부 여부 구분을 위한 컬럼(이미지 포함O = 1, 포함X = 0)
