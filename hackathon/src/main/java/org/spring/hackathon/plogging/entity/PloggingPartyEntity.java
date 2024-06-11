@@ -28,10 +28,6 @@ public class PloggingPartyEntity extends BaseEntity {
   @Column(name = "ploggingPartyNo")
   public Long partyNo;
 
-  //방장 이름 -> 연관관계 처리하기
-//  @Column(nullable = false)
-//  private String partyOwner;
-
   //방 이름
   @Column(nullable = false)
   private String partyName;

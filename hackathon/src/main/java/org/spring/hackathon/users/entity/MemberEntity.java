@@ -3,6 +3,7 @@ package org.spring.hackathon.users.entity;
 import lombok.*;
 import org.spring.hackathon.baseTime.BaseEntity;
 import org.spring.hackathon.plogging.entity.PloggingPartyEntity;
+import org.spring.hackathon.plogging.entity.PloggingPartyReply;
 import org.spring.hackathon.plogging.entity.PloggingRecordEntity;
 import org.spring.hackathon.security.role.Role;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,11 +68,11 @@ public class MemberEntity extends BaseEntity {
   //총 플로깅 거리
   private int ploggingDistanceAll;
 
-  //플로깅 기록 테이블과 연관 매핑(1:N 관계)
+  //플로깅 기록 테이블과 매핑(1:N 관계)
   @OneToMany(mappedBy = "recordJoinMember", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PloggingRecordEntity> ploggingRecordEntities = new ArrayList<>();
 
-  //단체 플로깅 모임 테이블과 연관 매핑(1:N 관계) / 종속관계 정립하기(방장이 탈퇴해도, 모임방은 사라지지 않음)
+  //단체 플로깅 모임 테이블과 매핑(1:N 관계) / 종속관계 정립하기(방장이 탈퇴해도, 모임방은 사라지지 않음)
   @OneToMany(mappedBy = "partyJoinMember")
   private List<PloggingPartyEntity> ploggingPartyEntitiesForLeader = new ArrayList<>();
 
@@ -80,5 +81,9 @@ public class MemberEntity extends BaseEntity {
   @JoinTable(name = "party_member_connect", joinColumns = @JoinColumn(name = "member_no"),
   inverseJoinColumns = @JoinColumn(name = "plogging_party_no"))
   private List<PloggingPartyEntity> ploggingPartyEntities = new ArrayList<>();
+
+  //플로깅 단체방 댓글과 매핑
+  @OneToMany(mappedBy = "")
+  private List<PloggingPartyReply> ploggingPartyReplyList = new ArrayList<>();
 
 }
