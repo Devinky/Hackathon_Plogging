@@ -3,11 +3,9 @@ package org.spring.hackathon.users.entity;
 import lombok.*;
 import org.spring.hackathon.baseTime.BaseEntity;
 import org.spring.hackathon.plogging.entity.PloggingPartyEntity;
-import org.spring.hackathon.plogging.entity.PloggingPartyReply;
+import org.spring.hackathon.plogging.entity.PloggingPartyReplyEntity;
 import org.spring.hackathon.plogging.entity.PloggingRecordEntity;
 import org.spring.hackathon.security.role.Role;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +29,6 @@ public class MemberEntity extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  //=========================================
-
   //회원 아이디
   @Column(nullable = false)
   private String memberId;
@@ -54,13 +50,12 @@ public class MemberEntity extends BaseEntity {
   private String memberAddress;
 
   //회원 프로필 사진
-  private MultipartFile memberPhoto;
+  @Column(nullable = false)
+  private int memberAttachPhoto;
 
   //자기소개
   @Column(length = 5000)
   private String memberIntro;
-
-  //===========> 여기까지 회원이 직접 입력하는 데이터
   
   //총 플로깅 포인트
   private int ploggingPoint;
@@ -68,11 +63,17 @@ public class MemberEntity extends BaseEntity {
   //총 플로깅 거리
   private int ploggingDistanceAll;
 
+  //Join 관계들
+  //프로필 사진과 1:1 관계 매핑(사진은 한장만 첨부 가능하므로)
+  @OneToOne
+  @JoinColumn(name = "memberPhoto_fk")
+  private MemberPhotoEntity memberPhoto;
+
   //플로깅 기록 테이블과 매핑(1:N 관계)
   @OneToMany(mappedBy = "recordJoinMember", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PloggingRecordEntity> ploggingRecordEntities = new ArrayList<>();
 
-  //단체 플로깅 모임 테이블과 매핑(1:N 관계) / 종속관계 정립하기(방장이 탈퇴해도, 모임방은 사라지지 않음)
+  //단체 플로깅 모임 테이블과 매핑(1:N 관계) / **종속관계 정립하기(방장이 탈퇴해도, 모임방은 사라지지 않음)**
   @OneToMany(mappedBy = "partyJoinMember")
   private List<PloggingPartyEntity> ploggingPartyEntitiesForLeader = new ArrayList<>();
 
@@ -82,8 +83,8 @@ public class MemberEntity extends BaseEntity {
   inverseJoinColumns = @JoinColumn(name = "plogging_party_no"))
   private List<PloggingPartyEntity> ploggingPartyEntities = new ArrayList<>();
 
-  //플로깅 단체방 댓글과 매핑
-  @OneToMany(mappedBy = "")
-  private List<PloggingPartyReply> ploggingPartyReplyList = new ArrayList<>();
+  //플로깅 단체방에 남길 수 있는 댓글과 매핑
+  @OneToMany(mappedBy = "replyWriter")
+  private List<PloggingPartyReplyEntity> ploggingPartyReplyList = new ArrayList<>();
 
 }

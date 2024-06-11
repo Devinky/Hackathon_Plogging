@@ -39,12 +39,14 @@ public class PloggingRecordEntity extends BaseEntity {
   private LocalDateTime ploggingDate;
 
   //플로깅을 몇시간 했는지
+  @Column(nullable = false)
   private String ploggingTime;
 
   //이미지 첨부 여부 구분을 위한 컬럼(이미지 포함O = 1, 포함X = 0)
   @Column(nullable = false)
   private int recordAttachPhoto;
 
+  //Join 관계들
   //플로깅 이미지 테이블과 연관 매핑(1:N 관계)
   @OneToMany(mappedBy = "photoJoinRecord", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PloggingPhotoEntity> ploggingPhotoEntities = new ArrayList<>();

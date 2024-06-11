@@ -14,9 +14,18 @@ import javax.persistence.*;
 @Table(name = "memberPhoto")
 public class MemberPhotoEntity extends BaseEntity {
 
+  //회원 테이블과 1:1 매핑
+
+  //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(table = "memberPhoto")
+  @Column(name = "memberPhotoNo")
   private Long memberPhotoNo;
+
+  //사진 원본 이름
+  private String memberPhotoNameOrigin;
+
+  //사진 변환된 이름
+  private String memberPhotoNameNew;
 
 }
