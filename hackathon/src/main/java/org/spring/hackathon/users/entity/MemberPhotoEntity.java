@@ -11,7 +11,7 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "memberPhoto")
+@Table(name = "member_photo")
 public class MemberPhotoEntity extends BaseEntity {
 
   //회원 테이블과 1:1 매핑
@@ -19,7 +19,7 @@ public class MemberPhotoEntity extends BaseEntity {
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "memberPhotoNo")
+  @Column(name = "member_photo_no")
   private Long memberPhotoNo;
 
   //사진 원본 이름

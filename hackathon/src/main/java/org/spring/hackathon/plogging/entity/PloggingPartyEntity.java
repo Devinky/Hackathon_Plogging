@@ -17,15 +17,15 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ploggingParty")
+@Table(name = "plogging_party")
 public class PloggingPartyEntity extends BaseEntity {
   
-  //단체 플로깅 기록 테이블
+  //단체플로깅 기록 테이블
 
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ploggingPartyNo")
+  @Column(name = "plogging_party_no")
   public Long partyNo;
 
   //방 이름
@@ -60,6 +60,10 @@ public class PloggingPartyEntity extends BaseEntity {
   //플로깅 진행 시간
   @Column(nullable = false)
   private String partyTime;
+
+  //사진 첨부 여부
+  @Column(nullable = false)
+  private int partyAttachPhoto;
   
   //방장 정보 매핑
   @ManyToOne
@@ -67,8 +71,8 @@ public class PloggingPartyEntity extends BaseEntity {
   private MemberEntity partyJoinMember;
 
   //댓글 목록 매핑
-  @OneToMany(mappedBy = "ploggingParty")
-  private List<PloggingPartyReplyEntity> ploggingPartyReplyEntityList = new ArrayList<>();
+  @OneToMany(mappedBy = "partyJoinReply")
+  private List<PloggingPartyReplyEntity> ploggingPartyReplyListForParty = new ArrayList<>();
   
   //플로깅 방과 회원 간의 N:M 관계를 해소해주는 연결 테이블 생성, 매핑
   @OneToMany

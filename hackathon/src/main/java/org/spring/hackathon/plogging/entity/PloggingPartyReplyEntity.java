@@ -12,12 +12,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "ploggingPartyReply")
+@Table(name = "plogging_party_reply")
 public class PloggingPartyReplyEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "replyNo")
+    @Column(name = "reply_no")
     private Long replyNo;
 
     //댓글 내용
@@ -26,12 +26,12 @@ public class PloggingPartyReplyEntity extends BaseEntity {
 
     //댓글 작성자 매핑
     @ManyToOne
-    @JoinColumn(name = "member_pk")
+    @JoinColumn(name = "member_reply_pk")
     private MemberEntity replyWriter;
 
     //댓글이 작성된 단체방 매핑
     @ManyToOne
-    @JoinColumn(name = "party_pk")
-    private PloggingPartyEntity ploggingParty;
+    @JoinColumn(name = "party_reply_pk")
+    private PloggingPartyEntity partyJoinReply;
 
 }

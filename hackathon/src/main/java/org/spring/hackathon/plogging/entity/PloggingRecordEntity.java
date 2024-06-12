@@ -6,7 +6,7 @@ import org.spring.hackathon.users.entity.MemberEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +16,15 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ploggingRecord")
+@Table(name = "plogging_record")
 public class PloggingRecordEntity extends BaseEntity {
 
-  //개인 플로깅 기록 테이블
+  //개인플로깅 기록 테이블
 
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "PloggingRecordNo")
+  @Column(name = "Plogging_record_no")
   public Long recordNo;
 
   //플로깅 한 거리
@@ -36,7 +36,7 @@ public class PloggingRecordEntity extends BaseEntity {
 
   //플로깅 한 날짜
   @DateTimeFormat(pattern = "yyyy-MM-dd")
-  private LocalDateTime ploggingDate;
+  private LocalDate ploggingDate;
 
   //플로깅을 몇시간 했는지
   @Column(nullable = false)
@@ -49,7 +49,7 @@ public class PloggingRecordEntity extends BaseEntity {
   //Join 관계들
   //플로깅 이미지 테이블과 연관 매핑(1:N 관계)
   @OneToMany(mappedBy = "photoJoinRecord", cascade = CascadeType.REMOVE, orphanRemoval = true)
-  private List<PloggingPhotoEntity> ploggingPhotoEntities = new ArrayList<>();
+  private List<PloggingPhotoEntity> ploggingPhotoList = new ArrayList<>();
 
   //회원 테이블과 연관 매핑(N:1 관계)
   @ManyToOne
