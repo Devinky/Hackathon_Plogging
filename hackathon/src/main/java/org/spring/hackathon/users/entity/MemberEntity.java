@@ -49,7 +49,7 @@ public class MemberEntity extends BaseEntity {
   @Column(nullable = false)
   private String memberAddress;
 
-  //회원 프로필 사진
+  //회원 프로필 사진 첨부 여부(첨부 = 1, 첨부X = 0)
   @Column(nullable = false)
   private int memberAttachPhoto;
 
