@@ -58,17 +58,14 @@ public class MemberEntity extends BaseEntity {
   private String memberIntro;
   
   //총 플로깅 포인트
+  @Column(nullable = false)
   private int ploggingPoint;
 
   //총 플로깅 거리
-  private int ploggingDistanceAll;
+  @Column(nullable = false)
+  private int ploggingDistanceTotal;
 
   //Join 관계들
-  //프로필 사진과 1:1 관계 매핑(사진은 한장만 첨부 가능하므로)
-  @OneToOne
-  @JoinColumn(name = "memberPhoto_fk")
-  private MemberPhotoEntity memberPhoto;
-
   //플로깅 기록 테이블과 매핑(1:N 관계)
   @OneToMany(mappedBy = "recordJoinMember", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PloggingRecordEntity> ploggingRecordList = new ArrayList<>();
@@ -79,8 +76,8 @@ public class MemberEntity extends BaseEntity {
 
   //회원과 플로깅 방의 N:M 관계를 해소해주는 연결 테이블 생성, 매핑
   @OneToMany
-  @JoinTable(name = "party_member_connect", joinColumns = @JoinColumn(name = "member_no"),
-  inverseJoinColumns = @JoinColumn(name = "plogging_party_no"))
+  @JoinTable(name = "party_member_connect", joinColumns = @JoinColumn(name = "member_party_fk"),
+  inverseJoinColumns = @JoinColumn(name = "plogging_party_fk"))
   private List<PloggingPartyEntity> ploggingPartyList = new ArrayList<>();
 
   //플로깅 단체방에 남길 수 있는 댓글과 매핑

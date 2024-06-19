@@ -24,7 +24,7 @@ public class PloggingRecordEntity extends BaseEntity {
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "Plogging_record_no")
+  @Column(name = "plogging_record_no")
   public Long recordNo;
 
   //플로깅 한 거리
@@ -44,16 +44,16 @@ public class PloggingRecordEntity extends BaseEntity {
 
   //이미지 첨부 여부 구분을 위한 컬럼(이미지 포함O = 1, 포함X = 0)
   @Column(nullable = false)
-  private int recordAttachPhoto;
+  private int ploggingRecordAttachPhoto;
 
   //Join 관계들
   //플로깅 이미지 테이블과 연관 매핑(1:N 관계)
-  @OneToMany(mappedBy = "photoJoinRecord", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @OneToMany(mappedBy = "ploggingRecordJoinPhoto", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PloggingPhotoEntity> ploggingPhotoList = new ArrayList<>();
 
   //회원 테이블과 연관 매핑(N:1 관계)
   @ManyToOne
-  @JoinColumn(name = "member_pk")
-  private MemberEntity recordJoinMember;
+  @JoinColumn(name = "member_record_fk")
+  private MemberEntity ploggingRecordJoinMember;
 
 }

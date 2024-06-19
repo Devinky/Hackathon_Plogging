@@ -26,12 +26,12 @@ public class PloggingPartyReplyEntity extends BaseEntity {
 
     //댓글 작성자 매핑
     @ManyToOne
-    @JoinColumn(name = "member_reply_pk")
+    @JoinColumn(name = "member_reply_fk")
     private MemberEntity replyWriter;
 
     //댓글이 작성된 단체방 매핑
     @ManyToOne
-    @JoinColumn(name = "party_reply_pk")
-    private PloggingPartyEntity partyJoinReply;
+    @JoinColumn(name = "party_reply_fk")
+    private PloggingPartyEntity ploggingPartyJoinReply;
 
 }

@@ -67,17 +67,17 @@ public class PloggingPartyEntity extends BaseEntity {
   
   //방장 정보 매핑
   @ManyToOne
-  @JoinColumn(name = "member_pk")
+  @JoinColumn(name = "member_fk")
   private MemberEntity partyJoinMember;
 
   //댓글 목록 매핑
-  @OneToMany(mappedBy = "partyJoinReply")
+  @OneToMany(mappedBy = "ploggingPartyJoinReply")
   private List<PloggingPartyReplyEntity> ploggingPartyReplyListForParty = new ArrayList<>();
   
   //플로깅 방과 회원 간의 N:M 관계를 해소해주는 연결 테이블 생성, 매핑
   @OneToMany
-  @JoinTable(name = "party_member_connect", joinColumns = @JoinColumn(name = "plogging_party_no"),
-  inverseJoinColumns = @JoinColumn(name = "member_no"))
+  @JoinTable(name = "party_member_connect", joinColumns = @JoinColumn(name = "plogging_party_fk"),
+  inverseJoinColumns = @JoinColumn(name = "member_party_fk"))
   private List<MemberEntity> memberEntities = new ArrayList<>();
 
 

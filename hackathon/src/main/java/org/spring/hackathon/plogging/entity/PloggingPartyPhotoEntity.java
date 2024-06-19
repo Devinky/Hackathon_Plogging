@@ -29,7 +29,7 @@ public class PloggingPartyPhotoEntity {
   private String partyPhotoNewName;
 
   @ManyToOne
-  @JoinColumn(name = "party_photo_pk")
+  @JoinColumn(name = "party_photo_fk")
   private PloggingPartyEntity ploggingPartyJoinPhoto;
 
 }
