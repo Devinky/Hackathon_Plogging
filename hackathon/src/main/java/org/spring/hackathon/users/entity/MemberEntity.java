@@ -72,16 +72,16 @@ public class MemberEntity extends BaseEntity {
 
   //단체 플로깅 모임 테이블과 매핑(1:N 관계) / **종속관계 정립하기(방장이 탈퇴해도, 모임방은 사라지지 않음)**
   @OneToMany(mappedBy = "partyJoinMember")
-  private List<PloggingPartyEntity> ploggingPartyListForLeader = new ArrayList<>();
+  private List<PloggingPartyEntity> partyListForLeader = new ArrayList<>();
 
   //회원과 플로깅 방의 N:M 관계를 해소해주는 연결 테이블 생성, 매핑
   @OneToMany
   @JoinTable(name = "party_member_connect", joinColumns = @JoinColumn(name = "member_party_fk"),
   inverseJoinColumns = @JoinColumn(name = "plogging_party_fk"))
-  private List<PloggingPartyEntity> ploggingPartyList = new ArrayList<>();
+  private List<PloggingPartyEntity> partyList = new ArrayList<>();
 
   //플로깅 단체방에 남길 수 있는 댓글과 매핑
   @OneToMany(mappedBy = "replyWriter")
-  private List<PloggingPartyReplyEntity> ploggingPartyReplyListForMember = new ArrayList<>();
+  private List<PloggingPartyReplyEntity> partyReplyListForMember = new ArrayList<>();
 
 }

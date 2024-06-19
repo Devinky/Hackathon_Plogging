@@ -31,6 +31,6 @@ public class PloggingPhotoEntity extends BaseEntity {
   //개인플로깅 테이블과 연관 매핑(N:1 관계)
   @ManyToOne
   @JoinColumn(name = "plogging_record_fk")
-  private PloggingRecordEntity ploggingRecordJoinPhoto;
+  private PloggingRecordEntity recordJoinPhoto;
 
 }

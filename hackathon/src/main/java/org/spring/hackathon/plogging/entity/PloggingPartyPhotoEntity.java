@@ -30,6 +30,6 @@ public class PloggingPartyPhotoEntity {
 
   @ManyToOne
   @JoinColumn(name = "party_photo_fk")
-  private PloggingPartyEntity ploggingPartyJoinPhoto;
+  private PloggingPartyEntity partyJoinPhoto;
 
 }

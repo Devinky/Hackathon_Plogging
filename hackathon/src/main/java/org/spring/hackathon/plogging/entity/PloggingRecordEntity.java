@@ -48,12 +48,12 @@ public class PloggingRecordEntity extends BaseEntity {
 
   //Join 관계들
   //플로깅 이미지 테이블과 연관 매핑(1:N 관계)
-  @OneToMany(mappedBy = "ploggingRecordJoinPhoto", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @OneToMany(mappedBy = "recordJoinPhoto", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PloggingPhotoEntity> ploggingPhotoList = new ArrayList<>();
 
   //회원 테이블과 연관 매핑(N:1 관계)
   @ManyToOne
   @JoinColumn(name = "member_record_fk")
-  private MemberEntity ploggingRecordJoinMember;
+  private MemberEntity recordJoinMember;
 
 }

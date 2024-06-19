@@ -71,8 +71,8 @@ public class PloggingPartyEntity extends BaseEntity {
   private MemberEntity partyJoinMember;
 
   //댓글 목록 매핑
-  @OneToMany(mappedBy = "ploggingPartyJoinReply")
-  private List<PloggingPartyReplyEntity> ploggingPartyReplyListForParty = new ArrayList<>();
+  @OneToMany(mappedBy = "partyJoinReply")
+  private List<PloggingPartyReplyEntity> partyReplyListForParty = new ArrayList<>();
   
   //플로깅 방과 회원 간의 N:M 관계를 해소해주는 연결 테이블 생성, 매핑
   @OneToMany
