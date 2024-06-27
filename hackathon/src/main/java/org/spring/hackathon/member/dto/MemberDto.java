@@ -1,4 +1,4 @@
-package org.spring.hackathon.users.dto;
+package org.spring.hackathon.member.dto;
 
 import lombok.*;
 
@@ -21,8 +21,12 @@ public class MemberDto {
 
   private String memberAddress;
 
+  private int memberAttachPhoto;
+
   private String memberIntro;
 
   private int ploggingPoint;
+
+  private int ploggingDistanceTotal;
 
 }

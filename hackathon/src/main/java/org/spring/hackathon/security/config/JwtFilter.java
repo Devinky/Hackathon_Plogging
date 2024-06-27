@@ -1,7 +1,7 @@
 package org.spring.hackathon.security.config;
 
 import lombok.RequiredArgsConstructor;
-import org.spring.hackathon.users.service.MemberService;
+import org.spring.hackathon.member.service.MemberService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

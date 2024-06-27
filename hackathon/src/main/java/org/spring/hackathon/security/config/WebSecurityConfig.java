@@ -1,7 +1,7 @@
 package org.spring.hackathon.security.config;
 
 import lombok.RequiredArgsConstructor;
-import org.spring.hackathon.users.service.MemberService;
+import org.spring.hackathon.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

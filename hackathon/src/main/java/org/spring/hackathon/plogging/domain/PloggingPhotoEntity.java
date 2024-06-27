@@ -1,4 +1,4 @@
-package org.spring.hackathon.plogging.entity;
+package org.spring.hackathon.plogging.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

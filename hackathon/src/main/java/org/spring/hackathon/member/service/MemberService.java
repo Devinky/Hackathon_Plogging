@@ -1,12 +1,12 @@
-package org.spring.hackathon.users.service;
+package org.spring.hackathon.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.spring.hackathon.security.exception.AppException;
 import org.spring.hackathon.security.exception.ErrorCode;
-import org.spring.hackathon.users.constructor.MemberConstructor;
-import org.spring.hackathon.users.dto.MemberDto;
-import org.spring.hackathon.users.entity.MemberEntity;
-import org.spring.hackathon.users.repository.MemberRepository;
+import org.spring.hackathon.member.constructor.MemberConstructor;
+import org.spring.hackathon.member.dto.MemberDto;
+import org.spring.hackathon.member.domain.MemberEntity;
+import org.spring.hackathon.member.repository.MemberRepository;
 import org.spring.hackathon.security.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +26,7 @@ public class MemberService {
 
   //회원가입
   @Transactional
-  public String signup(MemberDto dto) {
+  public String signUp(MemberDto dto) {
 
     String memberId = dto.getMemberId();
 
@@ -40,12 +40,12 @@ public class MemberService {
     //회원정보를 최종적으로 Repository에 저장
     memberRepository.save(memberEntity);
 
-    return "회원가입 처리 완료";
+    return "회원가입 완료";
 
   }
   //로그인
   @Transactional
-  public String signin(String id, String password) {
+  public String signIn(String id, String password) {
 
     //ID가 존재하지 않을 때
     MemberEntity selectedMember = memberRepository.findByMemberId(id)

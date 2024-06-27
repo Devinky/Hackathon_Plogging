@@ -1,10 +1,10 @@
-package org.spring.hackathon.users.entity;
+package org.spring.hackathon.member.domain;
 
 import lombok.*;
 import org.spring.hackathon.baseTime.BaseEntity;
-import org.spring.hackathon.plogging.entity.PloggingPartyEntity;
-import org.spring.hackathon.plogging.entity.PloggingPartyReplyEntity;
-import org.spring.hackathon.plogging.entity.PloggingRecordEntity;
+import org.spring.hackathon.plogging.domain.PloggingPartyEntity;
+import org.spring.hackathon.plogging.domain.PloggingPartyReplyEntity;
+import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
 import org.spring.hackathon.security.role.Role;
 import javax.persistence.*;
 import java.util.ArrayList;

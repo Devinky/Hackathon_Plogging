@@ -1,4 +1,4 @@
-package org.spring.hackathon.users.entity;
+package org.spring.hackathon.member.domain;
 
 import lombok.*;
 import org.spring.hackathon.baseTime.BaseEntity;

@@ -1,8 +1,8 @@
-package org.spring.hackathon.plogging.entity;
+package org.spring.hackathon.plogging.domain;
 
 import lombok.*;
 import org.spring.hackathon.baseTime.BaseEntity;
-import org.spring.hackathon.users.entity.MemberEntity;
+import org.spring.hackathon.member.domain.MemberEntity;
 
 import javax.persistence.*;
 

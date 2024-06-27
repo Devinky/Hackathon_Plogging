@@ -1,7 +1,7 @@
-package org.spring.hackathon.users.constructor;
+package org.spring.hackathon.member.constructor;
 
-import org.spring.hackathon.users.dto.MemberDto;
-import org.spring.hackathon.users.entity.MemberEntity;
+import org.spring.hackathon.member.dto.MemberDto;
+import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.security.role.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -17,7 +17,10 @@ public class MemberConstructor {
     memberEntity.setMemberName(memberDto.getMemberName());
     memberEntity.setMemberEmail(memberDto.getMemberEmail());
     memberEntity.setMemberAddress(memberDto.getMemberAddress());
-    memberEntity.setPloggingPoint(2000);
+    memberEntity.setMemberAttachPhoto(memberDto.getMemberAttachPhoto());
+    memberEntity.setMemberIntro(memberDto.getMemberIntro());
+    memberEntity.setPloggingPoint(0);
+    memberEntity.setPloggingDistanceTotal(0);
     memberEntity.setRole(Role.MEMBER);
 
     return memberEntity;
@@ -45,6 +48,7 @@ public class MemberConstructor {
     memberDto.setMemberName(memberEntity.getMemberName());
     memberDto.setMemberAddress(memberEntity.getMemberAddress());
     memberDto.setPloggingPoint(memberEntity.getPloggingPoint());
+    memberDto.setPloggingDistanceTotal(memberEntity.getPloggingDistanceTotal());
 
     return memberDto;
   }

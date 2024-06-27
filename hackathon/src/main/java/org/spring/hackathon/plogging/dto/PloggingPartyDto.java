@@ -1,7 +1,7 @@
 package org.spring.hackathon.plogging.dto;
 
 import lombok.*;
-import org.spring.hackathon.users.entity.MemberEntity;
+import org.spring.hackathon.member.domain.MemberEntity;
 
 @Getter
 @Setter
