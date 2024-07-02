@@ -27,6 +27,7 @@ public class MemberConstructor {
 
   }
 
+  //로그인 요청시 사용
   public static MemberDto signUpRequest(MemberEntity memberEntity) {
 
     MemberDto memberDto = new MemberDto();
@@ -38,7 +39,7 @@ public class MemberConstructor {
 
   }
 
-  //DB에 저장된 회원 데이터를 가져오는 용도
+  //DB에 저장된 회원 데이터를 가져오는 용도(마이페이지 정보 조회용)
   public static MemberDto memberEntityToDto(MemberEntity memberEntity) {
 
     MemberDto memberDto = new MemberDto();
@@ -47,6 +48,8 @@ public class MemberConstructor {
     memberDto.setMemberEmail(memberEntity.getMemberEmail());
     memberDto.setMemberName(memberEntity.getMemberName());
     memberDto.setMemberAddress(memberEntity.getMemberAddress());
+    memberDto.setMemberIntro(memberEntity.getMemberIntro());
+    memberDto.setMemberAttachPhoto(memberEntity.getMemberAttachPhoto());
     memberDto.setPloggingPoint(memberEntity.getPloggingPoint());
     memberDto.setPloggingDistanceTotal(memberEntity.getPloggingDistanceTotal());
 

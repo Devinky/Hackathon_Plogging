@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Member;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -21,5 +24,13 @@ public class MemberService {
   private final PasswordEncoder passwordEncoder;
 
 
+  //마이페이지 회원정보 조회
+  public MemberDto memberMyPageView(Long memberId) {
 
+    Optional<MemberEntity> memberEntity = memberRepository.findById(memberId);
+    MemberDto memberDto = MemberConstructor.memberEntityToDto(memberEntity.get());
+
+    return memberDto;
+
+  }
 }
