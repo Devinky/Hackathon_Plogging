@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Log4j2
 @RequestMapping("/member")
+@CrossOrigin(exposedHeaders = "Authorization")
 @RequiredArgsConstructor
 public class MemberController {
 
