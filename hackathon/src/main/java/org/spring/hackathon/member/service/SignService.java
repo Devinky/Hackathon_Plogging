@@ -44,13 +44,14 @@ public class SignService {
     return "회원가입 완료";
 
   }
+
   //로그인
   @Transactional
   public String signIn(String id, String password) {
 
     //ID가 존재하지 않을 때
     MemberEntity selectedMember = memberRepository.findByMemberId(id)
-        .orElseThrow(() -> new AppException(ErrorCode.MEMBERID_NOT_FOUND, id + " 로그인 실패 : 해당 ID 찾을 수 없음"));
+        .orElseThrow(() -> new AppException(ErrorCode.MEMBERID_NOT_FOUND, id + " 로그인 실패 : ID 찾을 수 없음"));
 
     //비밀번호 틀렸을 때
     if(passwordEncoder.matches(selectedMember.getMemberPassword(), password)) {

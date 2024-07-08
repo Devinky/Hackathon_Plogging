@@ -1,18 +1,26 @@
 package org.spring.hackathon.security.utils;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
 
+@RequiredArgsConstructor
 public class JwtUtil {
+
+  private final JwtProperties jwtProperties;
+
   public static String createToken(String userName, String secretKey, Long expiredMs) {
 
     Claims claims = Jwts.claims(); //일종의 MAP(정보를 넣는다), 유저네임 저장 가능
     claims.put("memberId", userName); //토큰을 열면 userName이 들어있다
 
     return Jwts.builder()
+        .setHeaderParam(Header.TYPE, Header.JWT_TYPE) //헤더 타입 : JWT
+//        .setIssuer()
         .setClaims(claims) //Claim 지정
         .setIssuedAt(new Date(System.currentTimeMillis())) //토큰이 언제 이슈됐는지
         .setExpiration(new Date(System.currentTimeMillis() + expiredMs)) //토큰을 언제까지 유지할 것인지
