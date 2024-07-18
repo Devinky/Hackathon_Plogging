@@ -28,7 +28,7 @@ public class WebSecurityConfig {
         .csrf().disable()
         .cors().and()
         .authorizeHttpRequests()
-        .antMatchers("/member/**").hasRole("MEMBER")
+        .antMatchers("/member/**", "/plogging/**").hasRole("MEMBER")
         .anyRequest().permitAll()
         .and()
         .sessionManagement()

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
 
-  private final MemberService memberService;
-
+  //회원 정보 조회, 수정, 탈퇴 처리 Controller
   //가입, 로그인 관련은 signController에서 처리
+  private final MemberService memberService;
 
   @GetMapping("/mypage/{memberId}")
   public String memberMypage(Model model){

@@ -33,4 +33,5 @@ spring:
       enabled: always
 
 jwt:
-  secret: "secretKey"
+  issuer: "inky"
+  secret_key: "seoulPlogging"
