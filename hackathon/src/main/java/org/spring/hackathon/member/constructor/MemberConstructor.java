@@ -39,7 +39,7 @@ public class MemberConstructor {
 
   }
 
-  //DB에 저장된 회원 데이터를 가져오는 용도(마이페이지 정보 조회용)
+  //DB에 저장된 회원 데이터를 가져오는 용도(토큰 발급 및 마이페이지 정보 조회용)
   public static MemberDto memberEntityToDto(MemberEntity memberEntity) {
 
     MemberDto memberDto = new MemberDto();

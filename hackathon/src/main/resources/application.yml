@@ -33,5 +33,6 @@ spring:
       enabled: always
 
 jwt:
-  issuer : inky
-  secret_key: seoul-ssudam
+  issuer: "inky"
+  secret_key: "seoulPlogging"
+

@@ -7,22 +7,22 @@ import org.spring.hackathon.member.dto.MemberDto;
 import org.spring.hackathon.member.repository.MemberRepository;
 import org.spring.hackathon.security.exception.AppException;
 import org.spring.hackathon.security.exception.ErrorCode;
-import org.spring.hackathon.security.utils.JwtUtil;
+import org.spring.hackathon.security.utils.JwtProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class SignService {
 
+  private final JwtProvider jwtProvider;
   private final MemberRepository memberRepository;
   private final PasswordEncoder passwordEncoder;
-
-  @Value("${jwt.secret}")
-  private String secretKey;
-  private Long expiredMs = 1000 * 60 * 60 * 10L;
 
   //회원가입
   @Transactional
@@ -36,7 +36,7 @@ public class SignService {
     });
 
     //ID 중복체크 통과하면
-    //Dto -> Entity 변환자를 이용하여 Entity에 정보를 Set
+    //Dto -> Entity 변환생성자를 이용하여 Entity에 정보를 Set
     MemberEntity memberEntity = MemberConstructor.memberDtoToEntity(dto, passwordEncoder);
     //회원정보를 최종적으로 Repository에 저장
     memberRepository.save(memberEntity);
@@ -60,7 +60,7 @@ public class SignService {
     }
 
     //모든 Exception을 통과했을 때 토큰을 발행
-    return JwtUtil.createToken(id, secretKey, expiredMs);
+    return jwtProvider.generateToken(Duration.ofDays(30), id);
 
   }
 
