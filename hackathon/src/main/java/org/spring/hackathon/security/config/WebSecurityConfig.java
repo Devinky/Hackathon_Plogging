@@ -9,16 +9,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-  private final JwtProperties jwtProperties;
-  private final MemberService memberService;
+  private final JwtFilter jwtFilter;
 
   @Bean
   public SecurityFilterChain webConfig(HttpSecurity http) throws Exception {
@@ -33,7 +35,7 @@ public class WebSecurityConfig {
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //JWT 사용하는 경우
         .and()
-//        .addFilterBefore(new JwtFilter(memberService, jwtProperties.getSecretKey()), UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtFilter, BasicAuthenticationFilter.class)
         .build();
   }
 
