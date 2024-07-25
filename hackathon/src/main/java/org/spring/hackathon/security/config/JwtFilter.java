@@ -31,8 +31,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
     //요청 헤더의 Authorization 키의 값 조회
     String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
+    System.out.println(authorizationHeader);
     //가져온 값에서 접두사 제거(Bearer)
     String token = getAccessToken(authorizationHeader);
+    System.out.println(token);
     //가져온 토큰이 유효한지 검증, 인증 정보를 설정
     if(jwtProvider.validToken(token)) {
       Authentication authentication = jwtProvider.getAuthentication(token);
@@ -48,6 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
     if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
       return authorizationHeader.substring(TOKEN_PREFIX.length());
     }
+    System.out.println(authorizationHeader);
     return null;
   }
 
