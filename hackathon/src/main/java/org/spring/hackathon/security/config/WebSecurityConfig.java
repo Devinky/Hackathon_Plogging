@@ -35,7 +35,7 @@ public class WebSecurityConfig {
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //JWT 사용하는 경우
         .and()
-        .addFilterBefore(jwtFilter, BasicAuthenticationFilter.class)
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
 

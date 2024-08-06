@@ -26,12 +26,14 @@ public class JwtFilter extends OncePerRequestFilter {
     //토큰이 있는지 매번 확인
     //인증할 때 통과하는 문 역할
 
-    //요청 헤더의 Authorization 키의 값 조회
+    //요청 메시지 헤더의 Authorization 키의 값 조회
     String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
     System.out.println(authorizationHeader);
-    //가져온 값에서 접두사 제거(Bearer)
+
+    //가져온 값에서 접두사 제거(Bearer) -> getAccessToken 호출
     String token = getAccessToken(authorizationHeader);
     System.out.println(token);
+
     //가져온 토큰이 유효한지 검증, 인증 정보를 설정
     if(jwtProvider.validToken(token)) {
       Authentication authentication = jwtProvider.getAuthentication(token);
@@ -43,8 +45,9 @@ public class JwtFilter extends OncePerRequestFilter {
   }
 
   private String getAccessToken(String authorizationHeader) {
-
+    //조건문 : authorizationHeader가 null이 아니고 Bearer 로 시작하는 문자열일 때 실행
     if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
+      //Bearer 자르기
       return authorizationHeader.substring(TOKEN_PREFIX.length());
     }
     System.out.println(authorizationHeader);
