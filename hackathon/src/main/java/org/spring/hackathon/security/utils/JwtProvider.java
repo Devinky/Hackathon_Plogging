@@ -5,7 +5,6 @@ import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.spring.hackathon.member.constructor.MemberConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,8 +35,8 @@ public class JwtProvider {
             .setIssuer(jwtProperties.getIssuer()) //발급자
             .setIssuedAt(now) //토큰 발급 시간
             .setExpiration(expiredTime) //토큰 만료 시간
-            .setSubject(memberId + " token")
-            .claim("ID : ", memberId)
+            .setSubject(memberId) //" token" 문자열 제거 *수정
+            .claim("memberID ", memberId) // 콜론 제거 *수정
             .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey()) //해시값 종류와 시크릿키 부여
             .compact(); //상기 설정으로 사인함을 선언
 
@@ -51,6 +50,8 @@ public class JwtProvider {
               .parseClaimsJws(token);
       return true;
     } catch (Exception e){
+      //예외 발생 시 로그 출력
+      e.printStackTrace();
       return false;
     }
 
@@ -59,23 +60,23 @@ public class JwtProvider {
   public Authentication getAuthentication(String token) {
 
     Claims claims = getClaims(token);
-    Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("MEMBER"));
+    Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_MEMBER"));
 
     return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User
             (claims.getSubject(), "", authorities), token, authorities);
 
   }
 
-  public Long getUserId(String token) {
+  public String getUserId(String token) {
     Claims claims = getClaims(token);
-    return claims.get("memberId : ", Long.class);
+    return claims.get("memberID ", String.class);
   }
 
   private Claims getClaims(String token) {
 
     return Jwts.parser() //클레임 조회
             .setSigningKey(jwtProperties.getSecretKey())
-            .parseClaimsJwt(token)
+            .parseClaimsJws(token)
             .getBody();
 
   }

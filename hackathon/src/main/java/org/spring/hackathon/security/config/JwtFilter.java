@@ -3,6 +3,7 @@ package org.spring.hackathon.security.config;
 import lombok.RequiredArgsConstructor;
 import org.spring.hackathon.security.utils.JwtProvider;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
