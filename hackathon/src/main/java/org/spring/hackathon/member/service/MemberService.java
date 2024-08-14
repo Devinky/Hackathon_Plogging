@@ -28,4 +28,14 @@ public class MemberService {
     return memberDto;
 
   }
+
+  //회원정보 수정
+  public MemberDto memberInfoUpdate(Long memberId, MemberDto dto) {
+
+    //builder 패턴을 이용해서 저장하는 방법 생각해보기
+//    MemberEntity member = MemberConstructor.memberDtoToEntity(dto);
+//    memberRepository.save(dto, memberId);
+    
+    return null;
+    }
 }
