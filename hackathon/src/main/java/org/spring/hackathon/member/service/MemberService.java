@@ -8,6 +8,7 @@ import org.spring.hackathon.member.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Member;
 import java.util.Optional;
 
@@ -18,24 +19,46 @@ public class MemberService {
   private final MemberRepository memberRepository;
   private final PasswordEncoder passwordEncoder;
 
+  //마이페이지 회원 정보 조회
+  public MemberDto memberMyPageView(Long memberNo) {
 
-  //마이페이지 회원정보 조회
-  public MemberDto memberMyPageView(Long memberId) {
-
-    Optional<MemberEntity> memberEntity = memberRepository.findById(memberId);
+    Optional<MemberEntity> memberEntity = memberRepository.findById(memberNo);
     MemberDto memberDto = MemberConstructor.memberEntityToDto(memberEntity.get());
 
     return memberDto;
 
   }
 
-  //회원정보 수정
-  public MemberDto memberInfoUpdate(Long memberId, MemberDto dto) {
+  //회원 정보 수정
+  @Transactional
+  public MemberDto memberInfoUpdate(Long memberNo, MemberDto dto) {
 
-    //builder 패턴을 이용해서 저장하는 방법 생각해보기
-//    MemberEntity member = MemberConstructor.memberDtoToEntity(dto);
-//    memberRepository.save(dto, memberId);
-    
+    Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(memberNo);
+
+    if (optionalMemberEntity.isPresent()){
+
+      MemberEntity memberUpdateEntity = optionalMemberEntity.get();
+
+      memberUpdateEntity.setMemberPassword(passwordEncoder.encode(dto.getMemberPassword()));
+      memberUpdateEntity.setMemberName(dto.getMemberName());
+      memberUpdateEntity.setMemberEmail(dto.getMemberEmail());
+      memberUpdateEntity.setMemberAddress(dto.getMemberAddress());
+      memberUpdateEntity.setMemberIntro(dto.getMemberIntro());
+      memberUpdateEntity.setMemberAttachPhoto(dto.getMemberAttachPhoto());
+
+      memberRepository.save(memberUpdateEntity);
+
+      }
+
     return null;
+
     }
+   
+  //회원 탈퇴
+  public void memberDelete(Long memberNo) {
+
+    memberRepository.deleteById(memberNo);
+    
+  }
+
 }

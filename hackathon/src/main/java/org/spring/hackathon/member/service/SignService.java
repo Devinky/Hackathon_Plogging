@@ -51,12 +51,12 @@ public class SignService {
 
     //ID가 존재하지 않을 때
     MemberEntity selectedMember = memberRepository.findByMemberId(id)
-        .orElseThrow(() -> new AppException(ErrorCode.MEMBERID_NOT_FOUND, id + " 로그인 실패 : ID 찾을 수 없음"));
+        .orElseThrow(() -> new AppException(ErrorCode.MEMBERID_NOT_FOUND, id + " 로그인 실패 : 회원 ID를 찾을 수 없습니다."));
 
     //비밀번호 틀렸을 때
     if(passwordEncoder.matches(selectedMember.getMemberPassword(), password)) {
       System.out.println("암호 : " + selectedMember.getMemberPassword() + " / 비밀번호 : " + password);
-      throw new AppException(ErrorCode.INVALID_PASSWORD, "로그인 실패 : 비밀번호 불일치");
+      throw new AppException(ErrorCode.INVALID_PASSWORD, "로그인 실패 : 비밀번호가 일치하지 않습니다.");
     }
 
     //모든 Exception을 통과했을 때 토큰을 발행

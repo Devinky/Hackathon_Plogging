@@ -1,6 +1,7 @@
 package org.spring.hackathon.member.domain;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.spring.hackathon.baseTime.BaseEntity;
 import org.spring.hackathon.plogging.domain.PloggingPartyEntity;
 import org.spring.hackathon.plogging.domain.PloggingPartyReplyEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "member")
 public class MemberEntity extends BaseEntity {
 

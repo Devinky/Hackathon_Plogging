@@ -18,23 +18,34 @@ import java.lang.reflect.Member;
 @RequiredArgsConstructor
 public class MemberController {
 
-  //회원 정보 조회, 수정, 탈퇴 처리 Controller
+  //회원 정보 조회, 수정, 탈퇴를 처리하는 Controller
   //가입, 로그인 관련은 signController에서 처리
   private final MemberService memberService;
 
-  @GetMapping("/mypage/{memberId}")
-  public ResponseEntity<MemberDto> memberMyPage(@PathVariable Long memberId){
+  //회원 정보 조회
+  @GetMapping("/mypage/{memberNo}")
+  public ResponseEntity<MemberDto> memberMyPage(@PathVariable Long memberNo) {
 
-    MemberDto memberDto = memberService.memberMyPageView(memberId);
+    MemberDto memberDto = memberService.memberMyPageView(memberNo);
     return new ResponseEntity<>(memberDto, HttpStatus.valueOf(200));
 
   }
 
-  @PatchMapping("/update/{memberId}")
-  public ResponseEntity<String> memberInfoUpdate(@PathVariable Long memberId, @RequestBody MemberDto dto){
+  //회원 정보 수정
+  @PatchMapping("/update/{memberNo}")
+  public ResponseEntity<String> memberInfoUpdate(@PathVariable Long memberNo, @RequestBody MemberDto dto) {
 
-    MemberDto memberDto = memberService.memberInfoUpdate(memberId, dto);
+    MemberDto memberDto = memberService.memberInfoUpdate(memberNo, dto);
     return ResponseEntity.ok().body("수정 완료");
+
+  }
+
+  //회원 탈퇴
+  @DeleteMapping("/delete/{memberNo}")
+  public ResponseEntity<String> memberDelete(@PathVariable Long memberNo) {
+
+    memberService.memberDelete(memberNo);
+    return ResponseEntity.ok().body("탈퇴 완료");
 
   }
 

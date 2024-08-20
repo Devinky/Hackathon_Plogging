@@ -1,13 +1,15 @@
 package org.spring.hackathon.member.constructor;
 
+import lombok.RequiredArgsConstructor;
 import org.spring.hackathon.member.dto.MemberDto;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.security.role.Role;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class MemberConstructor {
 
-  //회원가입할 때 받은 Dto의 데이터를 Entity에 저장하는 용도
+  //회원 가입할 때 받은 Dto의 데이터를 Entity에 저장하는 용도
   public static MemberEntity memberDtoToEntity(MemberDto memberDto, PasswordEncoder passwordEncoder) {
 
     MemberEntity memberEntity = new MemberEntity();
