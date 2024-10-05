@@ -1,6 +1,7 @@
 package org.spring.hackathon.plogging.domain;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.spring.hackathon.baseTime.BaseEntity;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,6 +17,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "plogging_record")
 public class PloggingRecordEntity extends BaseEntity {
 
@@ -55,5 +57,9 @@ public class PloggingRecordEntity extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "member_record_fk")
   private MemberEntity recordJoinMember;
+
+  //플로깅 중 업데이트 되는 위치 좌표를 저장하는 테이블과 연관 매핑(1:N 관계)
+  @OneToMany(mappedBy = "locationJoinRecord", cascade =  CascadeType.REMOVE, orphanRemoval = true)
+  private List<PloggingLocationEntity> ploggingLocationList = new ArrayList<>();
 
 }

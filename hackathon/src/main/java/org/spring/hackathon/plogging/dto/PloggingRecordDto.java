@@ -1,12 +1,9 @@
 package org.spring.hackathon.plogging.dto;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
