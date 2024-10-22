@@ -26,7 +26,7 @@ public class MemberEntity extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "member_no")
   public Long memberNo;
-  
+
   //회원 권한
   @Enumerated(EnumType.STRING)
   private Role role;

@@ -20,26 +20,25 @@ public class PloggingController {
   @GetMapping("/start/{memberNo}")
   public ResponseEntity<Long> ploggingStart(@RequestBody PloggingLocationDto location, @PathVariable Long memberNo) {
 
-    //플로깅을 시작한 지점의 위치를 보내고 기록이 저장되는 테이블의 id를 반환하는 로직
+    //플로깅을 시작한 지점의 위치를 보내고 기록이 저장되는 테이블의 id를 반환
     Long ploggingRecordNo = ploggingService.ploggingStartDo(location, memberNo);
-
     return ResponseEntity.ok().body(ploggingRecordNo);
 
   }
 
   //위치 좌표 체크, 업데이트 API
-  @PostMapping("/location")
-  public ResponseEntity<String> ploggindLocationCheck(@RequestBody PloggingLocationDto location, @RequestParam Long ploggingRecordNo) {
+  @PostMapping("/location/{recordNo}")
+  public ResponseEntity<String> ploggindLocationCheck(@RequestBody PloggingLocationDto location, @RequestParam Long recordNo) {
 
-    ploggingService.ploggingLocationUpdate(location, ploggingRecordNo);
+    ploggingService.ploggingLocationUpdate(location, recordNo);
     return ResponseEntity.ok("Location Check OK");
   }
 
-  @GetMapping("/end")
-  public ResponseEntity<String> ploggingEnd(@RequestParam Long ploggingRecordNo) {
+  @GetMapping("/end/{recordNO}")
+  public ResponseEntity<String> ploggingEnd(@RequestParam Long recordNo) {
 
-    ploggingService.ploggingEndDo(ploggingRecordNo);
-    return ResponseEntity.ok("");
+    ploggingService.ploggingEndDo(recordNo);
+    return ResponseEntity.ok("Plogging Done");
   }
 
 }

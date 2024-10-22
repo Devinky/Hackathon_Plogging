@@ -35,8 +35,8 @@ public class JwtProvider {
             .setIssuer(jwtProperties.getIssuer()) //발급자
             .setIssuedAt(now) //토큰 발급 시간
             .setExpiration(expiredTime) //토큰 만료 시간
-            .setSubject(memberId) //" token" 문자열 제거 *수정
-            .claim("memberID ", memberId) // 콜론 제거 *수정
+            .setSubject(memberId)
+            .claim("memberID ", memberId)
             .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey()) //해시값 종류와 시크릿키 부여
             .compact(); //상기 설정으로 사인함을 선언
 
