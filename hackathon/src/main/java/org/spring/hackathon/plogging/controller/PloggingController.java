@@ -17,11 +17,11 @@ public class PloggingController {
   private final PloggingRecordService ploggingService;
 
   //플로깅 시작 API
-  @GetMapping("/start")
-  public ResponseEntity<Long> ploggingStart(@RequestBody PloggingLocationDto location) {
+  @GetMapping("/start/{memberNo}")
+  public ResponseEntity<Long> ploggingStart(@RequestBody PloggingLocationDto location, @PathVariable Long memberNo) {
 
     //플로깅을 시작한 지점의 위치를 보내고 기록이 저장되는 테이블의 id를 반환하는 로직
-    Long ploggingRecordNo = ploggingService.ploggingStartDo(location);
+    Long ploggingRecordNo = ploggingService.ploggingStartDo(location, memberNo);
 
     return ResponseEntity.ok().body(ploggingRecordNo);
 

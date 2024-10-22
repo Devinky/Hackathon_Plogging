@@ -30,8 +30,7 @@ public class PloggingRecordEntity extends BaseEntity {
   public Long recordNo;
 
   //플로깅 한 거리
-  @Column(nullable = false)
-  private int ploggingDistance;
+  private float ploggingDistance;
 
   //플로깅 기록에 입력하는 주운 쓰레기 종류(여러 종류 받을 수 있는 거 같아서 리스트 타입으로 지정함)
   private ArrayList<String> trashCategory;
@@ -41,7 +40,6 @@ public class PloggingRecordEntity extends BaseEntity {
   private LocalDate ploggingDate;
 
   //플로깅을 몇시간 했는지
-  @Column(nullable = false)
   private String ploggingTime;
 
   //이미지 첨부 여부 구분을 위한 컬럼(이미지 포함O = 1, 포함X = 0)
