@@ -30,7 +30,7 @@ public class PloggingRecordEntity extends BaseEntity {
   public Long recordNo;
 
   //플로깅 한 거리
-  private float ploggingDistance;
+  private double ploggingDistance;
 
   //플로깅 기록에 입력하는 주운 쓰레기 종류(여러 종류 받을 수 있는 거 같아서 리스트 타입으로 지정함)
   private ArrayList<String> trashCategory;

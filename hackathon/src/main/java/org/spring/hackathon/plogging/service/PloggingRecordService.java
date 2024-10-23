@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +30,7 @@ public class PloggingRecordService {
     Optional<MemberEntity> memberCheck = memberRepository.findById(memberNo);
 
     memberCheck.ifPresent(user -> {
-      throw new RuntimeException("회원 확인 불가!");
+      throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가!)");
     });
 
     MemberEntity memberEntity = memberCheck.get();
@@ -55,7 +56,69 @@ public class PloggingRecordService {
 
   }
 
-  public void ploggingLocationUpdate(PloggingLocationDto location, Long ploggingRecordNo) {
+  @Transactional
+  public void ploggingLocationUpdate(PloggingLocationDto location, Long recordNo) {
+
+    //넘겨받은 플로깅 기록 넘버에 해당하는 레코드가 있는지 조회
+    Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(recordNo);
+
+    //해당하는 레코드가 없으면 에러 메시지 출력
+    recordCheck.ifPresent(record -> {
+      throw new RuntimeException("정상적인 접근이 아닙니다. (기록 정보 조회 불가!)");
+    });
+
+    PloggingRecordEntity recordEntity = recordCheck.get();
+
+    //넘겨받은 좌표 데이터를 대입
+    PloggingLocationEntity locationUpdate = new PloggingLocationEntity();
+
+    locationUpdate.setLatitude(location.getLatitude());
+    locationUpdate.setLongitude(locationUpdate.getLongitude());
+    locationUpdate.setLocationJoinRecord(recordEntity);
+
+    //이전 좌표와 현재 좌표를 대조해 계산하기 위해 좌표 리스트를 가져온다
+    //동일한 플로깅 기록 넘버를 외래키로 가지고 있는 좌표를 리스트업
+    List<PloggingLocationEntity> locationList = ploggingLocationRepository.findByPloggingRecordId(recordNo);
+
+    //좌표 리스트가 비어있지 않다면 실행
+    if(!locationList.isEmpty()) {
+
+      //마지막 위치 좌표 Get
+      PloggingLocationEntity lastLocation = locationList.get(locationList.size()-1);
+
+      //계산을 처리할 메서드로 값들을 보낸다
+      double distance = calculateDistance(lastLocation.getLatitude(), lastLocation.getLongitude(),
+              locationUpdate.getLatitude(), locationUpdate.getLongitude());
+
+      //플로깅 기록 테이블에 계산된 거리를 저장(현 시점에서 유저가 얼마나 이동했는지 총 거리)
+      recordEntity.setPloggingDistance(recordEntity.getPloggingDistance() + distance);
+
+      //처리를 마친 데이터를 각 테이블에 저장
+      ploggingLocationRepository.save(locationUpdate);
+      ploggingRecordRepository.save(recordEntity);
+
+    }
+
+  }
+  
+  //누적 거리 계산용 메서드
+  private double calculateDistance (double latBefore, double lonBefore, double latAfter, double lonAfter) {
+    
+    //Haversine 공식을 이용한 거리 계산
+    //지구 반경(km)
+    final double EARTH_RADIUS = 6371;
+
+    double lat = Math.toRadians(latAfter - latBefore);
+    double lon = Math.toRadians(lonAfter - lonBefore);
+
+    double calc = Math.sin(lat / 2) * Math.sin(lat / 2 )
+            + Math.cos(Math.toRadians(latBefore)) * Math.cos(Math.toRadians(latAfter))
+            * Math.sin(lon / 2) * Math.sin(lon / 2);
+
+    double value = 2 * Math.atan2(Math.sqrt(calc), Math.sqrt(1 - calc));
+
+    return EARTH_RADIUS * value;
+
   }
 
   @Transactional
