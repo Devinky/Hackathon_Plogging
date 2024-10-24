@@ -6,10 +6,12 @@ import org.spring.hackathon.member.repository.MemberRepository;
 import org.spring.hackathon.plogging.domain.PloggingLocationEntity;
 import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
 import org.spring.hackathon.plogging.dto.PloggingLocationDto;
+import org.spring.hackathon.plogging.dto.PloggingRecordDto;
 import org.spring.hackathon.plogging.repository.PloggingLocationRepository;
 import org.spring.hackathon.plogging.repository.PloggingRecordRepository;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +25,7 @@ public class PloggingRecordService {
   private final PloggingRecordRepository ploggingRecordRepository;
   private final PloggingLocationRepository ploggingLocationRepository;
 
+  //플로깅 시작
   public Long ploggingStartDo(PloggingLocationDto location, Long memberNo) {
 
     //전달받은 회원No에 해당하는 회원이 있다면 플로깅 기록 Save
@@ -48,6 +51,7 @@ public class PloggingRecordService {
 
     locationInsert.setLatitude(location.getLatitude());
     locationInsert.setLongitude(location.getLongitude());
+    locationInsert.setDistance(0);
     locationInsert.setLocationJoinRecord(ploggingRecord);
 
     ploggingLocationRepository.save(locationInsert);
@@ -56,10 +60,11 @@ public class PloggingRecordService {
 
   }
 
+  //좌표 위치 업데이트
   @Transactional
-  public void ploggingLocationUpdate(PloggingLocationDto location, Long recordNo) {
+  public PloggingLocationEntity ploggingLocationUpdate(PloggingLocationDto location, Long recordNo) {
 
-    //넘겨받은 플로깅 기록 넘버에 해당하는 레코드가 있는지 조회
+    //운동이 진행되는 기록 레코드 조회
     Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(recordNo);
 
     //해당하는 레코드가 없으면 에러 메시지 출력
@@ -73,35 +78,31 @@ public class PloggingRecordService {
     PloggingLocationEntity locationUpdate = new PloggingLocationEntity();
 
     locationUpdate.setLatitude(location.getLatitude());
-    locationUpdate.setLongitude(locationUpdate.getLongitude());
+    locationUpdate.setLongitude(location.getLongitude());
     locationUpdate.setLocationJoinRecord(recordEntity);
 
     //이전 좌표와 현재 좌표를 대조해 계산하기 위해 좌표 리스트를 가져온다
     //동일한 플로깅 기록 넘버를 외래키로 가지고 있는 좌표를 리스트업
     List<PloggingLocationEntity> locationList = ploggingLocationRepository.findByPloggingRecordId(recordNo);
 
-    //좌표 리스트가 비어있지 않다면 실행
-    if(!locationList.isEmpty()) {
+    //마지막 위치 좌표 Get
+    PloggingLocationEntity lastLocation = locationList.get(locationList.size()-1);
 
-      //마지막 위치 좌표 Get
-      PloggingLocationEntity lastLocation = locationList.get(locationList.size()-1);
-
-      //계산을 처리할 메서드로 값들을 보낸다
-      double distance = calculateDistance(lastLocation.getLatitude(), lastLocation.getLongitude(),
+    //계산을 처리할 메서드로 값들을 보낸다
+    double calcDistance = calculateDistance(lastLocation.getLatitude(), lastLocation.getLongitude(),
               locationUpdate.getLatitude(), locationUpdate.getLongitude());
 
-      //플로깅 기록 테이블에 계산된 거리를 저장(현 시점에서 유저가 얼마나 이동했는지 총 거리)
-      recordEntity.setPloggingDistance(recordEntity.getPloggingDistance() + distance);
+    //플로깅 기록 테이블에 계산된 거리를 저장(현 시점에서 유저가 얼마나 이동했는지 총 거리)
+    locationUpdate.setDistance(location.getDistance() + calcDistance);
 
-      //처리를 마친 데이터를 각 테이블에 저장
-      ploggingLocationRepository.save(locationUpdate);
-      ploggingRecordRepository.save(recordEntity);
+    //처리를 마친 데이터를 각 테이블에 저장
+    ploggingLocationRepository.save(locationUpdate);
 
-    }
+    return locationUpdate;
 
   }
   
-  //누적 거리 계산용 메서드
+  //누적 거리 계산용
   private double calculateDistance (double latBefore, double lonBefore, double latAfter, double lonAfter) {
     
     //Haversine 공식을 이용한 거리 계산
@@ -121,7 +122,24 @@ public class PloggingRecordService {
 
   }
 
+  //플로깅 종료
   @Transactional
-  public void ploggingEndDo(Long ploggingRecordNo) {
+  public void ploggingEndDo(PloggingRecordDto ploggingRecordDto, PloggingLocationDto location, Long recordNo) {
+
+    //최종적으로 플로깅이 끝났을 때의 위치를 업데이트 처리
+    PloggingLocationEntity locationProcessing = ploggingLocationUpdate(location, recordNo);
+
+    //운동이 진행되는 기록 레코드 조회
+    Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(recordNo);
+    //해당하는 레코드 get
+    PloggingRecordEntity finalRecord = recordCheck.get();
+
+    //플로깅이 종료됐을 때 입력되는 정보들을 저장
+    finalRecord.setPloggingDistance(locationProcessing.getDistance());
+    finalRecord.setTrashCategory(ploggingRecordDto.getTrashCategory());
+
+    ploggingRecordRepository.save(finalRecord);
+
   }
+
 }

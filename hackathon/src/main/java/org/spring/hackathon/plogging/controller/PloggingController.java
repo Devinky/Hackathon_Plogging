@@ -3,6 +3,7 @@ package org.spring.hackathon.plogging.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.spring.hackathon.plogging.dto.PloggingLocationDto;
+import org.spring.hackathon.plogging.dto.PloggingRecordDto;
 import org.spring.hackathon.plogging.service.PloggingRecordService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,16 +29,17 @@ public class PloggingController {
 
   //위치 좌표 체크, 업데이트 API
   @PostMapping("/location/{recordNo}")
-  public ResponseEntity<String> ploggindLocationCheck(@RequestBody PloggingLocationDto location, @RequestParam Long recordNo) {
+  public ResponseEntity<String> ploggindLocationCheck(@RequestBody PloggingLocationDto location, @PathVariable Long recordNo) {
 
     ploggingService.ploggingLocationUpdate(location, recordNo);
     return ResponseEntity.ok("Location Check OK");
   }
 
+  //플로깅 종료 API
   @GetMapping("/end/{recordNO}")
-  public ResponseEntity<String> ploggingEnd(@RequestParam Long recordNo) {
+  public ResponseEntity<String> ploggingEnd(@RequestBody PloggingRecordDto ploggingRecordDto, @RequestBody PloggingLocationDto location, @PathVariable Long recordNo) {
 
-    ploggingService.ploggingEndDo(recordNo);
+    ploggingService.ploggingEndDo(ploggingRecordDto, location, recordNo);
     return ResponseEntity.ok("Plogging Done");
   }
 
