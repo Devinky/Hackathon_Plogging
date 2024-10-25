@@ -15,8 +15,6 @@ public class PloggingLocationDto {
 
   private double longitude;
 
-  private double distance;
-
   public double getLatitude() { return latitude; }
   
   public double getLongitude() {

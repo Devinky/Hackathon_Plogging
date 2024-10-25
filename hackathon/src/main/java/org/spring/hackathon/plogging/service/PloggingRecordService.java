@@ -51,7 +51,6 @@ public class PloggingRecordService {
 
     locationInsert.setLatitude(location.getLatitude());
     locationInsert.setLongitude(location.getLongitude());
-    locationInsert.setDistance(0);
     locationInsert.setLocationJoinRecord(ploggingRecord);
 
     ploggingLocationRepository.save(locationInsert);
@@ -86,17 +85,17 @@ public class PloggingRecordService {
     List<PloggingLocationEntity> locationList = ploggingLocationRepository.findByPloggingRecordId(recordNo);
 
     //마지막 위치 좌표 Get
-    PloggingLocationEntity lastLocation = locationList.get(locationList.size()-1);
+    PloggingLocationEntity lastLocation = locationList.get(locationList.size() - 1);
 
     //계산을 처리할 메서드로 값들을 보낸다
     double calcDistance = calculateDistance(lastLocation.getLatitude(), lastLocation.getLongitude(),
               locationUpdate.getLatitude(), locationUpdate.getLongitude());
 
     //플로깅 기록 테이블에 계산된 거리를 저장(현 시점에서 유저가 얼마나 이동했는지 총 거리)
-    locationUpdate.setDistance(location.getDistance() + calcDistance);
+    recordEntity.setPloggingDistance(recordEntity.getPloggingDistance() + calcDistance);
 
     //처리를 마친 데이터를 각 테이블에 저장
-    ploggingLocationRepository.save(locationUpdate);
+    ploggingRecordRepository.save(recordEntity);
 
     return locationUpdate;
 
@@ -131,11 +130,9 @@ public class PloggingRecordService {
 
     //운동이 진행되는 기록 레코드 조회
     Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(recordNo);
-    //해당하는 레코드 get
     PloggingRecordEntity finalRecord = recordCheck.get();
 
     //플로깅이 종료됐을 때 입력되는 정보들을 저장
-    finalRecord.setPloggingDistance(locationProcessing.getDistance());
     finalRecord.setTrashCategory(ploggingRecordDto.getTrashCategory());
 
     ploggingRecordRepository.save(finalRecord);
