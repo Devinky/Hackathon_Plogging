@@ -82,7 +82,7 @@ public class PloggingRecordService {
 
     //이전 좌표와 현재 좌표를 대조해 계산하기 위해 좌표 리스트를 가져온다
     //동일한 플로깅 기록 넘버를 외래키로 가지고 있는 좌표를 리스트업
-    List<PloggingLocationEntity> locationList = ploggingLocationRepository.findByPloggingRecordId(recordNo);
+    List<PloggingLocationEntity> locationList = ploggingLocationRepository.findAllByPloggingRecordForeignKey(recordNo);
 
     //마지막 위치 좌표 Get
     PloggingLocationEntity lastLocation = locationList.get(locationList.size() - 1);
