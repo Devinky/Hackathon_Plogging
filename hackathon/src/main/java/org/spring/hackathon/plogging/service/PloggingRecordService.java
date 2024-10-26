@@ -123,7 +123,7 @@ public class PloggingRecordService {
 
   //플로깅 종료
   @Transactional
-  public void ploggingEndDo(PloggingRecordDto ploggingRecordDto, PloggingLocationDto location, Long recordNo) {
+  public void ploggingEndDo(PloggingRecordDto recordDto, PloggingLocationDto location, Long recordNo) {
 
     //최종적으로 플로깅이 끝났을 때의 위치를 업데이트 처리
     PloggingLocationEntity locationProcessing = ploggingLocationUpdate(location, recordNo);
@@ -133,7 +133,9 @@ public class PloggingRecordService {
     PloggingRecordEntity finalRecord = recordCheck.get();
 
     //플로깅이 종료됐을 때 입력되는 정보들을 저장
-    finalRecord.setTrashCategory(ploggingRecordDto.getTrashCategory());
+    finalRecord.setTrashCategory(recordDto.getTrashCategory());
+    finalRecord.setPloggingTime(recordDto.getPloggingTime());
+    finalRecord.setPloggingRecordAttachPhoto(recordDto.getRecordAttachPhoto());
 
     ploggingRecordRepository.save(finalRecord);
 

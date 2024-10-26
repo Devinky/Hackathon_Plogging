@@ -1,5 +1,9 @@
 package org.spring.hackathon.plogging.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.spring.hackathon.plogging.dto.PloggingLocationDto;
@@ -36,10 +40,16 @@ public class PloggingController {
   }
 
   //플로깅 종료 API
-  @GetMapping("/end/{recordNO}")
-  public ResponseEntity<String> ploggingEnd(@RequestBody PloggingRecordDto ploggingRecordDto, @RequestBody PloggingLocationDto location, @PathVariable Long recordNo) {
+  @GetMapping("/end/{recordNo}")
+  public ResponseEntity<String> ploggingEnd(@RequestBody JsonNode ploggingObject, @PathVariable Long recordNo)
+          throws JsonProcessingException {
 
-    ploggingService.ploggingEndDo(ploggingRecordDto, location, recordNo);
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    PloggingRecordDto recordDto = objectMapper.treeToValue(ploggingObject.get("recordDto"), PloggingRecordDto.class);
+    PloggingLocationDto location = objectMapper.treeToValue(ploggingObject.get("location"), PloggingLocationDto.class);
+
+    ploggingService.ploggingEndDo(recordDto, location, recordNo);
     return ResponseEntity.ok("Plogging Done");
   }
 
