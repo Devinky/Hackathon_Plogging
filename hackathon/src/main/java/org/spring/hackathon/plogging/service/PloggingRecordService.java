@@ -32,9 +32,9 @@ public class PloggingRecordService {
     //회원 넘버가 정확히 넘어왔는지 확인
     Optional<MemberEntity> memberCheck = memberRepository.findById(memberNo);
 
-    memberCheck.ifPresent(user -> {
+    if(!memberCheck.isPresent()) {
       throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가!)");
-    });
+    };
 
     MemberEntity memberEntity = memberCheck.get();
 
