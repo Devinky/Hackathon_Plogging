@@ -9,6 +9,7 @@ import org.spring.hackathon.plogging.dto.PloggingLocationDto;
 import org.spring.hackathon.plogging.dto.PloggingRecordDto;
 import org.spring.hackathon.plogging.repository.PloggingLocationRepository;
 import org.spring.hackathon.plogging.repository.PloggingRecordRepository;
+import org.spring.hackathon.security.utils.JwtProvider;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -21,22 +22,30 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PloggingRecordService {
 
+  private final JwtProvider jwtProvider;
   private final MemberRepository memberRepository;
   private final PloggingRecordRepository ploggingRecordRepository;
   private final PloggingLocationRepository ploggingLocationRepository;
 
   //플로깅 시작
-  public Long ploggingStartDo(PloggingLocationDto location, Long memberNo) {
+  public Long ploggingStartDo(PloggingLocationDto location, String token, Long memberNo) {
 
     //전달받은 회원No에 해당하는 회원이 있다면 플로깅 기록 Save
     //회원 넘버가 정확히 넘어왔는지 확인
     Optional<MemberEntity> memberCheck = memberRepository.findById(memberNo);
+    
+    //현재 로그인한 회원과 운동을 시작하려고 하는 회원 정보값이 일치하는지 검증하기 위한 데이터
+    String memberId = jwtProvider.getUserId(token.substring(7));
 
     if(!memberCheck.isPresent()) {
       throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가!)");
     };
 
     MemberEntity memberEntity = memberCheck.get();
+
+    if(!memberEntity.getMemberId().equals(memberId)) {
+      throw new RuntimeException("정상적인 접근이 아닙니다. (로그인 정보 불일치!)");
+    }
 
     PloggingRecordEntity ploggingRecord = new PloggingRecordEntity();
 
@@ -67,9 +76,9 @@ public class PloggingRecordService {
     Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(recordNo);
 
     //해당하는 레코드가 없으면 에러 메시지 출력
-    recordCheck.ifPresent(record -> {
+    if(!recordCheck.isPresent()) {
       throw new RuntimeException("정상적인 접근이 아닙니다. (기록 정보 조회 불가!)");
-    });
+    }
 
     PloggingRecordEntity recordEntity = recordCheck.get();
 

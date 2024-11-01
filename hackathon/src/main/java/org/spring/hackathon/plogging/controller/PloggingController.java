@@ -23,16 +23,17 @@ public class PloggingController {
 
   //플로깅 시작 API
   @GetMapping("/start/{memberNo}")
-  public ResponseEntity<Long> ploggingStart(@RequestBody PloggingLocationDto location, @PathVariable Long memberNo) {
+  public ResponseEntity<Long> ploggingStart(@RequestBody PloggingLocationDto location,
+                                            @RequestHeader("Authorization") String token, @PathVariable Long memberNo) {
 
     //플로깅을 시작한 지점의 위치를 보내고 기록이 저장되는 테이블의 id를 반환
-    Long ploggingRecordNo = ploggingService.ploggingStartDo(location, memberNo);
+    Long ploggingRecordNo = ploggingService.ploggingStartDo(location, token, memberNo);
     return ResponseEntity.ok().body(ploggingRecordNo);
 
   }
 
   //위치 좌표 체크, 업데이트 API
-  @PostMapping("/location/{recordNo}")
+  @GetMapping("/location/{recordNo}")
   public ResponseEntity<String> ploggindLocationCheck(@RequestBody PloggingLocationDto location, @PathVariable Long recordNo) {
 
     ploggingService.ploggingLocationUpdate(location, recordNo);

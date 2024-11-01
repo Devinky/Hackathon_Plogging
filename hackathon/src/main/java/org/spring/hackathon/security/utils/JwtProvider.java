@@ -68,8 +68,10 @@ public class JwtProvider {
   }
 
   public String getUserId(String token) {
+
     Claims claims = getClaims(token);
     return claims.get("memberID ", String.class);
+
   }
 
   private Claims getClaims(String token) {
