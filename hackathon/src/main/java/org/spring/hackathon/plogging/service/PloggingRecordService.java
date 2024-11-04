@@ -33,15 +33,14 @@ public class PloggingRecordService {
     //전달받은 회원No에 해당하는 회원이 있다면 플로깅 기록 Save
     //회원 넘버가 정확히 넘어왔는지 확인
     Optional<MemberEntity> memberCheck = memberRepository.findById(memberNo);
-    
+    MemberEntity memberEntity = memberCheck.get();
+
     //현재 로그인한 회원과 운동을 시작하려고 하는 회원 정보값이 일치하는지 검증하기 위한 데이터
     String memberId = jwtProvider.getUserId(token.substring(7));
 
     if(!memberCheck.isPresent()) {
       throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가!)");
     };
-
-    MemberEntity memberEntity = memberCheck.get();
 
     if(!memberEntity.getMemberId().equals(memberId)) {
       throw new RuntimeException("정상적인 접근이 아닙니다. (로그인 정보 불일치!)");
@@ -105,6 +104,7 @@ public class PloggingRecordService {
 
     //처리를 마친 데이터를 각 테이블에 저장
     ploggingRecordRepository.save(recordEntity);
+    ploggingLocationRepository.save(locationUpdate);
 
     return locationUpdate;
 
