@@ -5,8 +5,8 @@ import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.member.repository.MemberRepository;
 import org.spring.hackathon.plogging.domain.PloggingLocationEntity;
 import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
+import org.spring.hackathon.plogging.dto.PloggingEndRecordDto;
 import org.spring.hackathon.plogging.dto.PloggingLocationDto;
-import org.spring.hackathon.plogging.dto.PloggingRecordDto;
 import org.spring.hackathon.plogging.repository.PloggingLocationRepository;
 import org.spring.hackathon.plogging.repository.PloggingRecordRepository;
 import org.spring.hackathon.security.utils.JwtProvider;
@@ -132,7 +132,7 @@ public class PloggingRecordService {
 
   //플로깅 종료
   @Transactional
-  public void ploggingEndDo(PloggingRecordDto recordDto, PloggingLocationDto location, Long recordNo) {
+  public void ploggingEndDo(PloggingEndRecordDto recordDto, PloggingLocationDto location, Long recordNo) {
 
     //최종적으로 플로깅이 끝났을 때의 위치를 업데이트 처리
     PloggingLocationEntity locationProcessing = ploggingLocationUpdate(location, recordNo);
