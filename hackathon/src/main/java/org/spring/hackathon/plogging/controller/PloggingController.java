@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.spring.hackathon.plogging.dto.PloggingEndRecordDto;
+import org.spring.hackathon.plogging.dto.PloggingRecordDto;
 import org.spring.hackathon.plogging.dto.PloggingLocationDto;
 import org.spring.hackathon.plogging.service.PloggingRecordService;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +52,7 @@ public class PloggingController {
 //        return ResponseEntity.badRequest().body("Date Format Invalid!");
 //      }
 
-    PloggingEndRecordDto recordDto = objectMapper.treeToValue(ploggingObject.get("recordDto"), PloggingEndRecordDto.class);
+    PloggingRecordDto recordDto = objectMapper.treeToValue(ploggingObject.get("recordDto"), PloggingRecordDto.class);
     PloggingLocationDto location = objectMapper.treeToValue(ploggingObject.get("location"), PloggingLocationDto.class);
 
     ploggingService.ploggingEndDo(recordDto, location, recordNo);
