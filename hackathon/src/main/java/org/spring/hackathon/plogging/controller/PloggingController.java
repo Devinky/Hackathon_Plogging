@@ -47,10 +47,10 @@ public class PloggingController {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-//    try {
-//      if(!ploggingObject.has("recordDto") || !ploggingObject.has("location")) {
-//        return ResponseEntity.badRequest().body("Date Format Invalid!");
-//      }
+    try {
+      if(!ploggingObject.has("recordDto") || !ploggingObject.has("location")) {
+        return ResponseEntity.badRequest().body("Date Format Invalid!");
+      }
 
     PloggingRecordDto recordDto = objectMapper.treeToValue(ploggingObject.get("recordDto"), PloggingRecordDto.class);
     PloggingLocationDto location = objectMapper.treeToValue(ploggingObject.get("location"), PloggingLocationDto.class);
@@ -59,9 +59,9 @@ public class PloggingController {
 
     return ResponseEntity.ok("Plogging Done");
 
-//    } catch(JsonProcessingException e) {
-//        return ResponseEntity.badRequest().body("Error : Parsing data -> " + e.getMessage());
-//    }
+    } catch(JsonProcessingException e) {
+        return ResponseEntity.badRequest().body("Error : Parsing data -> " + e.getMessage());
+    }
 
   }
 
