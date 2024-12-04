@@ -11,8 +11,6 @@ import org.spring.hackathon.plogging.repository.PloggingLocationRepository;
 import org.spring.hackathon.plogging.repository.PloggingRecordRepository;
 import org.spring.hackathon.security.utils.JwtProvider;
 import org.springframework.stereotype.Service;
-
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
@@ -120,7 +118,7 @@ public class PloggingRecordService {
     double lat = Math.toRadians(latAfter - latBefore);
     double lon = Math.toRadians(lonAfter - lonBefore);
 
-    double calc = Math.sin(lat / 2) * Math.sin(lat / 2 )
+    double calc = Math.sin(lat / 2) * Math.sin(lat / 2)
             + Math.cos(Math.toRadians(latBefore)) * Math.cos(Math.toRadians(latAfter))
             * Math.sin(lon / 2) * Math.sin(lon / 2);
 
@@ -137,16 +135,31 @@ public class PloggingRecordService {
     //최종적으로 플로깅이 끝났을 때의 위치를 업데이트 처리
     PloggingLocationEntity locationProcessing = ploggingLocationUpdate(location, recordNo);
 
-    //운동이 진행되는 기록 레코드 조회
+    //운동이 진행되는 기록 레코드 get
     Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(recordNo);
     PloggingRecordEntity finalRecord = recordCheck.get();
+
+    //운동을 하는 회원 레코드 get
+    Optional<MemberEntity> memberCheck = memberRepository.findById(finalRecord.getRecordJoinMember().getMemberNo());
+    MemberEntity updateMember = memberCheck.get();
+
+    //종료 후 입력될 값들 계산(총 운동 거리, 운동으로 획득한 포인트)
+    int totalDistance = updateMember.getPloggingDistanceTotal() + (int) Math.round(finalRecord.getPloggingDistance());
+    //1km당 100포인트로 환산, 소숫점은 버린다
+    int distanceCalcForPoint = (int) (finalRecord.getPloggingDistance() * 100);
+    int totalPoint = distanceCalcForPoint + updateMember.getPloggingPoint();
+
 
     //플로깅이 종료됐을 때 입력되는 정보들을 저장
     finalRecord.setTrashCategory(recordDto.getTrashCategory());
     finalRecord.setPloggingTime(recordDto.getPloggingTime());
     finalRecord.setPloggingRecordAttachPhoto(recordDto.getRecordAttachPhoto());
 
+    updateMember.setPloggingDistanceTotal(totalDistance);
+    updateMember.setPloggingPoint(totalPoint);
+
     ploggingRecordRepository.save(finalRecord);
+    memberRepository.save(updateMember);
 
   }
 
