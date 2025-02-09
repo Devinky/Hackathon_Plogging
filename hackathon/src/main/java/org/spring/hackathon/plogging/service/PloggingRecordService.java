@@ -144,11 +144,10 @@ public class PloggingRecordService {
     MemberEntity updateMember = memberCheck.get();
 
     //종료 후 입력될 값들 계산(총 운동 거리, 운동으로 획득한 포인트)
-    int totalDistance = updateMember.getPloggingDistanceTotal() + (int) Math.round(finalRecord.getPloggingDistance());
+    float totalDistance = updateMember.getPloggingDistanceTotal() + Math.round(finalRecord.getPloggingDistance());
     //1km당 100포인트로 환산, 소숫점은 버린다
     int distanceCalcForPoint = (int) (finalRecord.getPloggingDistance() * 100);
     int totalPoint = distanceCalcForPoint + updateMember.getPloggingPoint();
-
 
     //플로깅이 종료됐을 때 입력되는 정보들을 저장
     finalRecord.setTrashCategory(recordDto.getTrashCategory());
