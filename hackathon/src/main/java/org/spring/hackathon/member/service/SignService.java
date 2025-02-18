@@ -26,9 +26,9 @@ public class SignService {
 
   //회원가입
   @Transactional
-  public String signUp(MemberDto dto) {
+  public String signUp(MemberDto memberDto) {
 
-    String memberId = dto.getMemberId();
+    String memberId = memberDto.getMemberId();
 
     //아이디 중복 Check -> DB 확인
     memberRepository.findByMemberId(memberId).ifPresent(user -> {
@@ -37,7 +37,7 @@ public class SignService {
 
     //ID 중복체크 통과하면
     //Dto -> Entity 변환생성자를 이용하여 Entity에 정보를 Set
-    MemberEntity memberEntity = MemberConstructor.memberDtoToEntity(dto, passwordEncoder);
+    MemberEntity memberEntity = MemberConstructor.memberDtoToEntity(memberDto, passwordEncoder);
     //회원정보를 최종적으로 Repository에 저장
     memberRepository.save(memberEntity);
 

@@ -48,7 +48,7 @@ public class PloggingController {
 
     try {
       if(!ploggingObject.has("recordDto") || !ploggingObject.has("location")) {
-        return ResponseEntity.badRequest().body("Date Format Invalid!");
+        return ResponseEntity.badRequest().body("Data Format Invalid!");
       }
 
     PloggingRecordDto recordDto = objectMapper.treeToValue(ploggingObject.get("recordDto"), PloggingRecordDto.class);
