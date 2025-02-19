@@ -2,10 +2,8 @@ package org.spring.hackathon.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.spring.hackathon.common.service.ImageService;
 import org.spring.hackathon.member.dto.MemberDto;
-import org.spring.hackathon.member.dto.MemberPhotoDto;
-import org.spring.hackathon.member.service.MemberService;
-import org.spring.hackathon.member.service.SignFileService;
 import org.spring.hackathon.member.service.SignService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,24 +21,26 @@ import java.io.IOException;
 public class SignController {
 
   private final SignService signService;
-  private final SignFileService signFileService;
+  private final ImageService imageService;
 
   @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<String> signUp(@RequestPart MemberDto memberDto,
-                                       @RequestPart(value = "file", required = false)MultipartFile memberFile) throws IOException {
+                                       @RequestPart(value = "file", required = false) MultipartFile memberImage) throws IOException {
+
+    String identify = "member";
 
     log.info("====================================회원가입 실행====================================");
     log.info("가입 정보 : " + memberDto);
 
-    if (!memberFile.isEmpty()) {
+    if (!memberImage.isEmpty()) {
       log.info("파일이 첨부됨.");
-      log.info("첨부파일명 : " + memberFile.getOriginalFilename());
+      log.info("첨부파일명 : " + memberImage.getOriginalFilename());
     } else {
       log.info("파일 없음.");
     }
 
     signService.signUp(memberDto);
-    signFileService.fileSave(memberFile);
+    imageService.imageSave(memberImage, identify);
 
     return ResponseEntity.ok().body("회원가입 완료");
 

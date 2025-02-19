@@ -2,7 +2,7 @@ package org.spring.hackathon.plogging.domain;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.spring.hackathon.baseTime.BaseEntity;
+import org.spring.hackathon.common.baseTime.BaseEntity;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -44,12 +44,12 @@ public class PloggingRecordEntity extends BaseEntity {
 
   //이미지 첨부 여부 구분을 위한 컬럼(이미지 포함O = 1, 포함X = 0)
   @Column(nullable = false)
-  private int ploggingRecordAttachPhoto;
+  private int ploggingRecordAttachImage;
 
   //Join 관계들
   //플로깅 이미지 테이블과 연관 매핑(1:N 관계)
   @OneToMany(mappedBy = "recordJoinPhoto", cascade = CascadeType.REMOVE, orphanRemoval = true)
-  private List<PloggingPhotoEntity> ploggingPhotoList = new ArrayList<>();
+  private List<PloggingImageEntity> ploggingImageList = new ArrayList<>();
 
   //회원 테이블과 연관 매핑(N:1 관계)
   @ManyToOne

@@ -10,26 +10,25 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "plogging_party_photo")
-public class PloggingPartyPhotoEntity {
+@Table(name = "plogging_party_image")
+public class PloggingPartyImageEntity {
 
-  //플로깅 단체방에서 업로드 된 사진 파일을 저장하는 테이블
+  //플로깅 단체방에서 업로드된 사진 파일을 저장하는 테이블
   //단체방 메인 사진, 단체플로깅 진행 후 인증 사진 두 종류를 저장한다
   
-  //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "plogging_party_photo_No")
-  private Long partyPhotoNo;
+  @Column(name = "plogging_party_image_No")
+  private Long partyImageNo;
   
   //사진 파일 원본 이름
-  private String partyPhotoOriginName;
+  private String partyImageOriginName;
 
   //사진 파일 변환된 이름
-  private String partyPhotoNewName;
+  private String partyImageNewName;
 
   @ManyToOne
-  @JoinColumn(name = "party_photo_fk")
-  private PloggingPartyEntity partyJoinPhoto;
+  @JoinColumn(name = "party_Image_fk")
+  private PloggingPartyEntity partyJoinImage;
 
 }

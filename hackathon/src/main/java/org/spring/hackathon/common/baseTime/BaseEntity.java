@@ -1,4 +1,4 @@
-package org.spring.hackathon.baseTime;
+package org.spring.hackathon.common.baseTime;
 
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;

@@ -19,7 +19,7 @@ public class MemberConstructor {
     memberEntity.setMemberName(memberDto.getMemberName());
     memberEntity.setMemberEmail(memberDto.getMemberEmail());
     memberEntity.setMemberAddress(memberDto.getMemberAddress());
-    memberEntity.setMemberAttachPhoto(memberDto.getMemberAttachPhoto());
+    memberEntity.setMemberAttachImage(memberDto.getMemberAttachImage());
     memberEntity.setMemberIntro(memberDto.getMemberIntro());
     memberEntity.setPloggingPoint(0);
     memberEntity.setPloggingDistanceTotal(0);
@@ -51,7 +51,7 @@ public class MemberConstructor {
     memberDto.setMemberName(memberEntity.getMemberName());
     memberDto.setMemberAddress(memberEntity.getMemberAddress());
     memberDto.setMemberIntro(memberEntity.getMemberIntro());
-    memberDto.setMemberAttachPhoto(memberEntity.getMemberAttachPhoto());
+    memberDto.setMemberAttachImage(memberEntity.getMemberAttachImage());
     memberDto.setPloggingPoint(memberEntity.getPloggingPoint());
     memberDto.setPloggingDistanceTotal(memberEntity.getPloggingDistanceTotal());
 

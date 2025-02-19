@@ -8,16 +8,16 @@ import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class PloggingPhotoDto {
+public class PloggingImageDto {
 
-  public Long ploggingPhotoNo;
+  public Long ploggingImageNo;
 
   //사용자가 지정해놓은 파일 이름
-  private String ploggingPhotoNameOrigin;
+  private String ploggingImageNameOrigin;
 
   //새로 저장될 파일 이름
-  private String ploggingPhotoNameNew;
+  private String ploggingImageNameNew;
 
-  private PloggingRecordEntity photoJoinRecord;
+  private PloggingRecordEntity imageJoinRecord;
 
 }

@@ -2,7 +2,7 @@ package org.spring.hackathon.member.domain;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.spring.hackathon.baseTime.BaseEntity;
+import org.spring.hackathon.common.baseTime.BaseEntity;
 import org.spring.hackathon.plogging.domain.PloggingPartyEntity;
 import org.spring.hackathon.plogging.domain.PloggingPartyReplyEntity;
 import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
@@ -53,7 +53,7 @@ public class MemberEntity extends BaseEntity {
 
   //회원 프로필 사진 첨부 여부(첨부 = 1, 첨부X = 0)
   @Column(nullable = false)
-  private int memberAttachPhoto;
+  private int memberAttachImage;
 
   //자기소개
   @Column(length = 5000)

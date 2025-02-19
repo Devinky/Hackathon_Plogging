@@ -1,7 +1,7 @@
 package org.spring.hackathon.plogging.domain;
 
 import lombok.*;
-import org.spring.hackathon.baseTime.BaseEntity;
+import org.spring.hackathon.common.baseTime.BaseEntity;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -63,7 +63,7 @@ public class PloggingPartyEntity extends BaseEntity {
 
   //사진 첨부 여부
   @Column(nullable = false)
-  private int partyAttachPhoto;
+  private int partyAttachImage;
   
   //방장 정보 매핑
   @ManyToOne

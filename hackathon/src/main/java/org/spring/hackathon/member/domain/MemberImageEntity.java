@@ -1,7 +1,7 @@
 package org.spring.hackathon.member.domain;
 
 import lombok.*;
-import org.spring.hackathon.baseTime.BaseEntity;
+import org.spring.hackathon.common.baseTime.BaseEntity;
 
 import javax.persistence.*;
 
@@ -11,25 +11,25 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "member_photo")
-public class MemberPhotoEntity extends BaseEntity {
+@Table(name = "member_image")
+public class MemberImageEntity extends BaseEntity {
 
   //회원 테이블과 1:1 매핑
 
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "member_photo_no")
-  private Long memberPhotoNo;
+  @Column(name = "member_image_no")
+  private Long memberImageNo;
 
   //사진 원본 이름
-  private String memberPhotoNameOrigin;
+  private String memberImageNameOrigin;
 
   //사진 변환된 이름
-  private String memberPhotoNameNew;
+  private String memberImageNameNew;
 
   @OneToOne
   @JoinColumn(name = "member_fk")
-  private MemberEntity memberJoinPhoto;
+  private MemberEntity memberJoinImage;
 
 }

@@ -21,7 +21,7 @@ public class MemberDto {
 
   private String memberAddress;
 
-  private int memberAttachPhoto;
+  private int memberAttachImage;
 
   private String memberIntro;
 
