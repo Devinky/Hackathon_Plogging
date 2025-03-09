@@ -44,7 +44,7 @@ public class MemberService {
       memberUpdateEntity.setMemberEmail(dto.getMemberEmail());
       memberUpdateEntity.setMemberAddress(dto.getMemberAddress());
       memberUpdateEntity.setMemberIntro(dto.getMemberIntro());
-      memberUpdateEntity.setMemberAttachPhoto(dto.getMemberAttachPhoto());
+      memberUpdateEntity.setMemberAttachImage(dto.getMemberAttachImage());
 
       memberRepository.save(memberUpdateEntity);
 

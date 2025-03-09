@@ -38,7 +38,7 @@ public class PloggingRecordService {
 
     if(!memberCheck.isPresent()) {
       throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가!)");
-    };
+    }
 
     if(!memberEntity.getMemberId().equals(memberId)) {
       throw new RuntimeException("정상적인 접근이 아닙니다. (로그인 정보 불일치!)");
@@ -47,7 +47,7 @@ public class PloggingRecordService {
     PloggingRecordEntity ploggingRecord = new PloggingRecordEntity();
 
     ploggingRecord.setPloggingDate(LocalDate.now());
-    ploggingRecord.setPloggingRecordAttachPhoto(0);
+    ploggingRecord.setPloggingRecordAttachImage(0);
     ploggingRecord.setRecordJoinMember(memberEntity);
 
     ploggingRecordRepository.save(ploggingRecord);
@@ -152,7 +152,7 @@ public class PloggingRecordService {
     //플로깅이 종료됐을 때 입력되는 정보들을 저장
     finalRecord.setTrashCategory(recordDto.getTrashCategory());
     finalRecord.setPloggingTime(recordDto.getPloggingTime());
-    finalRecord.setPloggingRecordAttachPhoto(recordDto.getRecordAttachPhoto());
+    finalRecord.setPloggingRecordAttachImage(recordDto.getRecordAttachImage());
 
     updateMember.setPloggingDistanceTotal(totalDistance);
     updateMember.setPloggingPoint(totalPoint);

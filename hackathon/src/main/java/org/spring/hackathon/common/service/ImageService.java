@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Service
 public class ImageService {
+
   @Value("${spring.servlet.location}")
   private static String UPLOAD_DIR;
 
@@ -20,6 +21,10 @@ public class ImageService {
     String filePath = UPLOAD_DIR + newImageName;
 
     image.transferTo(new File(filePath));
+
+    if (identify == "member") {
+
+    }
 
   }
 }

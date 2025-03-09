@@ -1,6 +1,7 @@
 package org.spring.hackathon.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.hackathon.common.service.ImageService;
 import org.spring.hackathon.member.constructor.MemberConstructor;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.member.dto.MemberDto;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Date;
 
@@ -23,17 +26,21 @@ public class SignService {
   private final JwtProvider jwtProvider;
   private final MemberRepository memberRepository;
   private final PasswordEncoder passwordEncoder;
+  private final ImageService imageService;
 
   //회원가입
   @Transactional
-  public String signUp(MemberDto memberDto) {
+  public String signUp(MemberDto memberDto, MultipartFile memberImage) throws IOException {
 
     String memberId = memberDto.getMemberId();
+    String identify = "member";
 
     //아이디 중복 Check -> DB 확인
     memberRepository.findByMemberId(memberId).ifPresent(user -> {
       throw new AppException(ErrorCode.MEMBERID_DUPLICATED, "'" + memberId + "'" + " 는 이미 사용 중인 아이디입니다.");
     });
+
+    imageService.imageSave(memberImage, identify);
 
     //ID 중복체크 통과하면
     //Dto -> Entity 변환생성자를 이용하여 Entity에 정보를 Set

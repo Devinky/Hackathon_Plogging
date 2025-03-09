@@ -39,8 +39,7 @@ public class SignController {
       log.info("파일 없음.");
     }
 
-    signService.signUp(memberDto);
-    imageService.imageSave(memberImage, identify);
+      signService.signUp(memberDto, memberImage);
 
     return ResponseEntity.ok().body("회원가입 완료");
 
