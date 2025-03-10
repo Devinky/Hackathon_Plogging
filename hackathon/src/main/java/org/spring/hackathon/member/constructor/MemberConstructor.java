@@ -1,10 +1,8 @@
 package org.spring.hackathon.member.constructor;
 
-import lombok.RequiredArgsConstructor;
 import org.spring.hackathon.member.dto.MemberDto;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.security.role.Role;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class MemberConstructor {
@@ -56,6 +54,17 @@ public class MemberConstructor {
     memberDto.setPloggingDistanceTotal(memberEntity.getPloggingDistanceTotal());
 
     return memberDto;
+
+  }
+
+  //플로깅 종료 후 플로깅 한 거리와 얻은 포인트 기록
+  public static MemberEntity memberPloggingEndTransfer(MemberEntity updateMember, float totalDistance, int totalPoint) {
+
+    updateMember.setPloggingDistanceTotal(totalDistance);
+    updateMember.setPloggingPoint(totalPoint);
+
+    return updateMember;
+
   }
 
 }

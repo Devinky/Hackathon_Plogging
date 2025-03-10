@@ -1,8 +1,11 @@
 package org.spring.hackathon.plogging.service;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.hackathon.common.service.ImageService;
+import org.spring.hackathon.member.constructor.MemberConstructor;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.member.repository.MemberRepository;
+import org.spring.hackathon.plogging.constructor.PloggingRecordConstructor;
 import org.spring.hackathon.plogging.domain.PloggingLocationEntity;
 import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
 import org.spring.hackathon.plogging.dto.PloggingRecordDto;
@@ -11,7 +14,10 @@ import org.spring.hackathon.plogging.repository.PloggingLocationRepository;
 import org.spring.hackathon.plogging.repository.PloggingRecordRepository;
 import org.spring.hackathon.security.utils.JwtProvider;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +30,7 @@ public class PloggingRecordService {
   private final MemberRepository memberRepository;
   private final PloggingRecordRepository ploggingRecordRepository;
   private final PloggingLocationRepository ploggingLocationRepository;
+  private final ImageService imageService;
 
   //플로깅 시작
   public Long ploggingStartDo(PloggingLocationDto location, String token, Long memberNo) {
@@ -31,7 +38,7 @@ public class PloggingRecordService {
     //전달받은 회원No에 해당하는 회원이 있다면 플로깅 기록 Save
     //회원 넘버가 정확히 넘어왔는지 확인
     Optional<MemberEntity> memberCheck = memberRepository.findById(memberNo);
-    MemberEntity memberEntity = memberCheck.get();
+    MemberEntity memberEntityGet = memberCheck.get();
 
     //현재 로그인한 회원과 운동을 시작하려고 하는 회원 정보값이 일치하는지 검증하기 위한 데이터
     String memberId = jwtProvider.getUserId(token.substring(7));
@@ -40,25 +47,16 @@ public class PloggingRecordService {
       throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가!)");
     }
 
-    if(!memberEntity.getMemberId().equals(memberId)) {
+    if(!memberEntityGet.getMemberId().equals(memberId)) {
       throw new RuntimeException("정상적인 접근이 아닙니다. (로그인 정보 불일치!)");
     }
 
-    PloggingRecordEntity ploggingRecord = new PloggingRecordEntity();
-
-    ploggingRecord.setPloggingDate(LocalDate.now());
-    ploggingRecord.setPloggingRecordAttachImage(0);
-    ploggingRecord.setRecordJoinMember(memberEntity);
-
+    //플로깅 테이블 생성
+    PloggingRecordEntity ploggingRecord = PloggingRecordConstructor.ploggingStartTransfer(memberEntityGet);
     ploggingRecordRepository.save(ploggingRecord);
 
     //플로깅이 시작된 위치 좌표를 좌표 테이블에 저장
-    PloggingLocationEntity locationInsert = new PloggingLocationEntity();
-
-    locationInsert.setLatitude(location.getLatitude());
-    locationInsert.setLongitude(location.getLongitude());
-    locationInsert.setLocationJoinRecord(ploggingRecord);
-
+    PloggingLocationEntity locationInsert = PloggingRecordConstructor.ploggingLocationTransfer(location, ploggingRecord);
     ploggingLocationRepository.save(locationInsert);
 
     return ploggingRecord.getRecordNo();
@@ -80,16 +78,12 @@ public class PloggingRecordService {
     PloggingRecordEntity recordEntity = recordCheck.get();
 
     //넘겨받은 좌표 데이터를 대입
-    PloggingLocationEntity locationUpdate = new PloggingLocationEntity();
-
-    locationUpdate.setLatitude(location.getLatitude());
-    locationUpdate.setLongitude(location.getLongitude());
-    locationUpdate.setLocationJoinRecord(recordEntity);
+    PloggingLocationEntity locationUpdate = PloggingRecordConstructor.ploggingLocationTransfer(location, recordEntity);
 
     //이전 좌표와 현재 좌표를 대조해 계산하기 위해 좌표 리스트를 가져온다
     //동일한 플로깅 기록 넘버를 외래키로 가지고 있는 좌표를 리스트업
     List<PloggingLocationEntity> locationList = ploggingLocationRepository.findAllByPloggingRecordForeignKey(recordNo);
-
+    
     //마지막 위치 좌표 Get
     PloggingLocationEntity lastLocation = locationList.get(locationList.size() - 1);
 
@@ -108,7 +102,7 @@ public class PloggingRecordService {
 
   }
   
-  //누적 거리 계산용
+  //누적 거리 계산 메서드
   private double calculateDistance (double latBefore, double lonBefore, double latAfter, double lonAfter) {
     
     //Haversine 공식을 이용한 거리 계산
@@ -130,32 +124,34 @@ public class PloggingRecordService {
 
   //플로깅 종료
   @Transactional
-  public void ploggingEndDo(PloggingRecordDto recordDto, PloggingLocationDto location, Long recordNo) {
+  public void ploggingEndDo(PloggingRecordDto recordDto, PloggingLocationDto location, Long recordNo, MultipartFile image) throws IOException {
 
     //최종적으로 플로깅이 끝났을 때의 위치를 업데이트 처리
     PloggingLocationEntity locationProcessing = ploggingLocationUpdate(location, recordNo);
 
     //운동이 진행되는 기록 레코드 get
     Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(recordNo);
-    PloggingRecordEntity finalRecord = recordCheck.get();
+    PloggingRecordEntity finalRecordGet = recordCheck.get();
 
     //운동을 하는 회원 레코드 get
-    Optional<MemberEntity> memberCheck = memberRepository.findById(finalRecord.getRecordJoinMember().getMemberNo());
-    MemberEntity updateMember = memberCheck.get();
+    Optional<MemberEntity> memberCheck = memberRepository.findById(finalRecordGet.getRecordJoinMember().getMemberNo());
+    MemberEntity updateMemberGet = memberCheck.get();
 
     //종료 후 입력될 값들 계산(총 운동 거리, 운동으로 획득한 포인트)
-    float totalDistance = updateMember.getPloggingDistanceTotal() + Math.round(finalRecord.getPloggingDistance());
+    float totalDistance = updateMemberGet.getPloggingDistanceTotal() + Math.round(finalRecordGet.getPloggingDistance());
     //1km당 100포인트로 환산, 소숫점은 버린다
-    int distanceCalcForPoint = (int) (finalRecord.getPloggingDistance() * 100);
-    int totalPoint = distanceCalcForPoint + updateMember.getPloggingPoint();
+    int distanceCalcForPoint = (int) (finalRecordGet.getPloggingDistance() * 100);
+    int totalPoint = distanceCalcForPoint + updateMemberGet.getPloggingPoint();
+
+    //첨부된 이미지 처리
+    if(!image.isEmpty()) {
+      String identify = "plogging";
+      imageService.imageSave(image, identify, recordNo);
+    }
 
     //플로깅이 종료됐을 때 입력되는 정보들을 저장
-    finalRecord.setTrashCategory(recordDto.getTrashCategory());
-    finalRecord.setPloggingTime(recordDto.getPloggingTime());
-    finalRecord.setPloggingRecordAttachImage(recordDto.getRecordAttachImage());
-
-    updateMember.setPloggingDistanceTotal(totalDistance);
-    updateMember.setPloggingPoint(totalPoint);
+    PloggingRecordEntity finalRecord = PloggingRecordConstructor.ploggingEndTransfer(recordDto, finalRecordGet);
+    MemberEntity updateMember = MemberConstructor.memberPloggingEndTransfer(updateMemberGet, totalDistance, totalPoint);
 
     ploggingRecordRepository.save(finalRecord);
     memberRepository.save(updateMember);

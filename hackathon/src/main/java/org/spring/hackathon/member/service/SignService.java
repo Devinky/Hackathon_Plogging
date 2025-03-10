@@ -33,14 +33,19 @@ public class SignService {
   public String signUp(MemberDto memberDto, MultipartFile memberImage) throws IOException {
 
     String memberId = memberDto.getMemberId();
-    String identify = "member";
 
     //아이디 중복 Check -> DB 확인
     memberRepository.findByMemberId(memberId).ifPresent(user -> {
       throw new AppException(ErrorCode.MEMBERID_DUPLICATED, "'" + memberId + "'" + " 는 이미 사용 중인 아이디입니다.");
     });
 
-    imageService.imageSave(memberImage, identify);
+    if(!memberImage.isEmpty()){
+      //첨부된 이미지 처리
+      String identify = "member";
+      Long identifyNo = memberDto.getMemberNo();
+
+      imageService.imageSave(memberImage, identify, identifyNo);
+    }
 
     //ID 중복체크 통과하면
     //Dto -> Entity 변환생성자를 이용하여 Entity에 정보를 Set

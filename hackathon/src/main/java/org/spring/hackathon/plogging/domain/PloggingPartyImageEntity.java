@@ -28,7 +28,7 @@ public class PloggingPartyImageEntity {
   private String partyImageNewName;
 
   @ManyToOne
-  @JoinColumn(name = "party_Image_fk")
+  @JoinColumn(name = "party_image_fk")
   private PloggingPartyEntity partyJoinImage;
 
 }

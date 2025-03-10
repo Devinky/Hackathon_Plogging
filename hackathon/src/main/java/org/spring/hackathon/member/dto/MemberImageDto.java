@@ -1,6 +1,7 @@
 package org.spring.hackathon.member.dto;
 
 import lombok.*;
+import org.spring.hackathon.member.domain.MemberEntity;
 
 @Getter
 @Setter
@@ -14,5 +15,7 @@ public class MemberImageDto {
   private String memberImageNameOrigin;
 
   private String memberImageNameNew;
+
+  private MemberEntity imageJoinMember;
 
 }

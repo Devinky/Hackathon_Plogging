@@ -10,6 +10,9 @@ import org.spring.hackathon.plogging.dto.PloggingLocationDto;
 import org.spring.hackathon.plogging.service.PloggingRecordService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @Log4j2
@@ -41,8 +44,8 @@ public class PloggingController {
 
   //플로깅 종료 API
   @GetMapping("/end/{recordNo}")
-  public ResponseEntity<String> ploggingEnd(@RequestBody JsonNode ploggingObject, @PathVariable Long recordNo)
-          throws JsonProcessingException {
+  public ResponseEntity<String> ploggingEnd(@RequestBody JsonNode ploggingObject, @PathVariable Long recordNo, MultipartFile ploggingImage)
+          throws JsonProcessingException, IOException {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -54,7 +57,7 @@ public class PloggingController {
     PloggingRecordDto recordDto = objectMapper.treeToValue(ploggingObject.get("recordDto"), PloggingRecordDto.class);
     PloggingLocationDto location = objectMapper.treeToValue(ploggingObject.get("location"), PloggingLocationDto.class);
 
-    ploggingService.ploggingEndDo(recordDto, location, recordNo);
+    ploggingService.ploggingEndDo(recordDto, location, recordNo, ploggingImage);
 
     return ResponseEntity.ok("Plogging Done");
 

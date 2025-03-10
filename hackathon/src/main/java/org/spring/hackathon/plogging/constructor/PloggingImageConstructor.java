@@ -1,0 +1,20 @@
+package org.spring.hackathon.plogging.constructor;
+
+import org.spring.hackathon.member.domain.MemberImageEntity;
+import org.spring.hackathon.plogging.domain.PloggingImageEntity;
+import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
+import org.springframework.web.multipart.MultipartFile;
+
+public class PloggingImageConstructor {
+  public static PloggingImageEntity ploggingImageTransfer(MultipartFile image, String newImageName, PloggingRecordEntity recordEntity) {
+
+    PloggingImageEntity recordImage = new PloggingImageEntity();
+
+    recordImage.setPloggingImageNameOrigin(image.getOriginalFilename());
+    recordImage.setPloggingImageNameNew(newImageName);
+    recordImage.setRecordJoinImage(recordEntity);
+
+    return recordImage;
+
+  }
+}

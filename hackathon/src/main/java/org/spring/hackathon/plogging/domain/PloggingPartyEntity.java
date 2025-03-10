@@ -80,5 +80,7 @@ public class PloggingPartyEntity extends BaseEntity {
   inverseJoinColumns = @JoinColumn(name = "member_party_fk"))
   private List<MemberEntity> memberEntities = new ArrayList<>();
 
+  @OneToMany(mappedBy = "partyJoinImage", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<PloggingPartyImageEntity> partyImageList = new ArrayList<>();
 
 }
