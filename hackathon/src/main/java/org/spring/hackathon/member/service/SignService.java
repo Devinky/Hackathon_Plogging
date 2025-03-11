@@ -39,6 +39,12 @@ public class SignService {
       throw new AppException(ErrorCode.MEMBERID_DUPLICATED, "'" + memberId + "'" + " 는 이미 사용 중인 아이디입니다.");
     });
 
+    //ID 중복체크 통과하면
+    //Dto -> Entity 변환생성자를 이용하여 Entity에 정보를 Set
+    MemberEntity memberEntity = MemberConstructor.memberDtoToEntity(memberDto, passwordEncoder);
+    //회원정보를 최종적으로 Repository에 저장
+    memberRepository.save(memberEntity);
+
     if(!memberImage.isEmpty()){
       //첨부된 이미지 처리
       String identify = "member";
@@ -46,12 +52,6 @@ public class SignService {
 
       imageService.imageSave(memberImage, identify, identifyNo);
     }
-
-    //ID 중복체크 통과하면
-    //Dto -> Entity 변환생성자를 이용하여 Entity에 정보를 Set
-    MemberEntity memberEntity = MemberConstructor.memberDtoToEntity(memberDto, passwordEncoder);
-    //회원정보를 최종적으로 Repository에 저장
-    memberRepository.save(memberEntity);
 
     return "회원가입 완료";
 

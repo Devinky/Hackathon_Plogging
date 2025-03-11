@@ -1,5 +1,6 @@
 package org.spring.hackathon.member.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.spring.hackathon.common.service.ImageService;
@@ -24,13 +25,11 @@ public class SignController {
   private final ImageService imageService;
 
   @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<String> signUp(@RequestPart MemberDto memberDto,
+  public ResponseEntity<String> signUp(@RequestPart (value = "json") String memberDtoJson,
                                        @RequestPart(value = "file", required = false) MultipartFile memberImage) throws IOException {
 
-    String identify = "member";
-
     log.info("====================================회원가입 실행====================================");
-    log.info("가입 정보 : " + memberDto);
+    log.info("가입 정보 : " + memberDtoJson);
 
     if (!memberImage.isEmpty()) {
       log.info("파일이 첨부됨.");
@@ -38,6 +37,9 @@ public class SignController {
     } else {
       log.info("파일 없음.");
     }
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    MemberDto memberDto = objectMapper.readValue(memberDtoJson, MemberDto.class);
 
     signService.signUp(memberDto, memberImage);
 

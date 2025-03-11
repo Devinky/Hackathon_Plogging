@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/seoulssudam?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: s0402
+    password: 1234
     #s0402
 
   jpa:
@@ -18,16 +18,16 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
 
   servlet:
     multipart:
-      max-file-size: 30MB
+      max-file-size: 10MB
       max-request-size: 10MB
-      location: C:\ploggingPhotos
+      location: C:\ploggingImages
 
   output:
     ansi:
