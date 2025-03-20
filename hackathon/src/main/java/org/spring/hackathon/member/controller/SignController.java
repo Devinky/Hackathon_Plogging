@@ -22,11 +22,10 @@ import java.io.IOException;
 public class SignController {
 
   private final SignService signService;
-  private final ImageService imageService;
 
   @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<String> signUp(@RequestPart (value = "json") String memberDtoJson,
-                                       @RequestPart(value = "file", required = false) MultipartFile memberImage) throws IOException {
+  public ResponseEntity<String> signUp(@RequestPart String memberDtoJson,
+                                       @RequestPart (value = "file", required = false) MultipartFile memberImage) throws IOException {
 
     log.info("====================================회원가입 실행====================================");
     log.info("가입 정보 : " + memberDtoJson);
