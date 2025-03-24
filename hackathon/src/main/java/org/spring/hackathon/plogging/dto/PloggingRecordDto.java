@@ -22,14 +22,6 @@ public class PloggingRecordDto {
 
   private String ploggingTime;
 
-  //아래로 사진 관련 Dto
-  //플로깅 기록에 사진이 포함됐을 때, 사진을 저장하기 위한 객체
-  private File ploggingImage;
-
-  private String ploggingImageNameOrigin;
-
-  private String ploggingImageNameNew;
-
   private int recordAttachImage;
 
 }

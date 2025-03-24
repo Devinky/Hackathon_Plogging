@@ -27,6 +27,8 @@ public class SignController {
   public ResponseEntity<String> signUp(@RequestPart String memberDtoJson,
                                        @RequestPart (value = "file", required = false) MultipartFile memberImage) throws IOException {
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
     log.info("====================================회원가입 실행====================================");
     log.info("가입 정보 : " + memberDtoJson);
 
@@ -37,9 +39,7 @@ public class SignController {
       log.info("파일 없음.");
     }
 
-    ObjectMapper objectMapper = new ObjectMapper();
     MemberDto memberDto = objectMapper.readValue(memberDtoJson, MemberDto.class);
-
     signService.signUp(memberDto, memberImage);
 
     return ResponseEntity.ok().body("회원가입 완료");
