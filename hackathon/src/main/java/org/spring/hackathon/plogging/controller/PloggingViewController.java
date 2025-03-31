@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @Log4j2
 @RequestMapping("/plogging/view")
@@ -20,13 +22,11 @@ public class PloggingViewController {
   private final PloggingViewService ploggingViewService;
 
   @GetMapping("/{memberNo}")
-  public ResponseEntity<PloggingRecordDto> ploggingRecordView (@PathVariable Long memberNo) {
+  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordView (@PathVariable Long memberNo) {
 
-    
+    List<PloggingRecordDto> getRecordList = ploggingViewService.recordReadView(memberNo);
+    return new ResponseEntity<>(getRecordList, HttpStatus.valueOf(200));
 
-    return new ResponseEntity<>(new PloggingRecordDto(), HttpStatus.valueOf(200));
   }
-
-
 
 }

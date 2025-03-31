@@ -1,8 +1,7 @@
 package org.spring.hackathon.plogging.dto;
 
 import lombok.*;
-import java.io.File;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Getter
@@ -14,11 +13,11 @@ public class PloggingRecordDto {
 
   private Long ploggingRecordNo;
 
-  private int ploggingDistance;
+  private double ploggingDistance;
 
   private ArrayList<String> trashCategory;
 
-  private LocalDateTime ploggingDate;
+  private LocalDate ploggingDate;
 
   private String ploggingTime;
 

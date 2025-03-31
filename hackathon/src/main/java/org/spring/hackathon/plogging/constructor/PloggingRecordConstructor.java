@@ -47,4 +47,19 @@ public class PloggingRecordConstructor {
 
   }
 
+  //플로깅 기록 조회
+  public static PloggingRecordDto ploggingRecordMonthView(PloggingRecordEntity recordEntity) {
+
+    PloggingRecordDto recordDto = new PloggingRecordDto();
+
+    recordDto.setPloggingDistance(recordEntity.getPloggingDistance());
+    recordDto.setPloggingDate(recordEntity.getPloggingDate());
+    recordDto.setPloggingTime(recordEntity.getPloggingTime());
+    recordDto.setTrashCategory(recordEntity.getTrashCategory());
+    recordDto.setRecordAttachImage(recordDto.getRecordAttachImage());
+
+    return recordDto;
+
+  }
+
 }
