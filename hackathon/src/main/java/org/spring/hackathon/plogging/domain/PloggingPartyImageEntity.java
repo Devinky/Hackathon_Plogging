@@ -27,6 +27,8 @@ public class PloggingPartyImageEntity {
   //사진 파일 변환된 이름
   private String partyImageNewName;
 
+  private String filePath;
+
   @ManyToOne
   @JoinColumn(name = "party_image_fk")
   private PloggingPartyEntity partyJoinImage;

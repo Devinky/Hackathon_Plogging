@@ -22,6 +22,8 @@ public class PloggingPartyDto {
 
   private String partyIntro;
 
+  private String filePath;
+
   //참가자 목록 데이터를 불러올 때 사용
   private MemberEntity partyMember;
 

@@ -6,12 +6,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class MemberImageConstructor {
 
-  public static MemberImageEntity memberImageTransfer(MultipartFile image, String newImageName, MemberEntity memberEntity) {
+  public static MemberImageEntity memberImageTransfer(MultipartFile image, String newImageName, String filePath, MemberEntity memberEntity) {
 
     MemberImageEntity memberImage = new MemberImageEntity();
 
     memberImage.setMemberImageNameOrigin(image.getOriginalFilename());
     memberImage.setMemberImageNameNew(newImageName);
+    memberImage.setFilePath(filePath);
     memberImage.setMemberJoinImage(memberEntity);
 
     return memberImage;

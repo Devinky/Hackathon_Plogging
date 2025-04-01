@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.spring.hackathon.member.constructor.MemberConstructor;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.member.dto.MemberDto;
+import org.spring.hackathon.member.repository.MemberImageRepository;
 import org.spring.hackathon.member.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,15 +18,28 @@ import java.util.Optional;
 public class MemberService {
 
   private final MemberRepository memberRepository;
+  private final MemberImageRepository memberImageRepository;
   private final PasswordEncoder passwordEncoder;
 
   //마이페이지 회원 정보 조회
   public MemberDto memberMyPageView(Long memberNo) {
 
     Optional<MemberEntity> memberEntity = memberRepository.findById(memberNo);
-    MemberDto memberDto = MemberConstructor.memberEntityToDto(memberEntity.get());
 
-    return memberDto;
+    if(memberEntity.get().getMemberAttachImage() == 1) {
+
+      String filePath = memberImageRepository.findFilePathWithMemberFk(memberNo);
+      MemberDto memberDto = MemberConstructor.memberEntityToDto(memberEntity.get(), filePath);
+
+      return memberDto;
+
+    } else {
+
+      MemberDto memberDto = MemberConstructor.memberEntityToDto(memberEntity.get(), null);
+      return memberDto;
+
+    }
+
 
   }
 

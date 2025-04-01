@@ -29,4 +29,6 @@ public class MemberDto {
 
   private float ploggingDistanceTotal;
 
+  private String filePath;
+
 }

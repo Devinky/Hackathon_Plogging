@@ -21,8 +21,6 @@ import java.util.List;
 @Table(name = "plogging_record")
 public class PloggingRecordEntity extends BaseEntity {
 
-  //개인플로깅 기록 테이블
-
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +39,8 @@ public class PloggingRecordEntity extends BaseEntity {
 
   //플로깅을 몇시간 했는지
   private String ploggingTime;
+
+  private String ploggingMemo;
 
   //이미지 첨부 여부 구분을 위한 컬럼(이미지 포함O = 1, 포함X = 0)
   @Column(nullable = false)

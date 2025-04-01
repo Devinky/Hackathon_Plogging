@@ -28,6 +28,8 @@ public class MemberImageEntity extends BaseEntity {
   //사진 변환된 이름
   private String memberImageNameNew;
 
+  private String filePath;
+
   @OneToOne
   @JoinColumn(name = "member_fk")
   private MemberEntity memberJoinImage;

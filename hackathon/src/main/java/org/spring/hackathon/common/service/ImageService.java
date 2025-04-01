@@ -1,6 +1,7 @@
 package org.spring.hackathon.common.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.spring.hackathon.member.constructor.MemberImageConstructor;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.member.domain.MemberImageEntity;
@@ -27,6 +28,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ImageService {
 
   private final MemberRepository memberRepository;
@@ -36,14 +38,16 @@ public class ImageService {
   private final PloggingPartyRepository ploggingPartyRepository;
   private final PloggingPartyImageRepository ploggingPartyImageRepository;
 
-  @Value("${spring.servlet.location}")
-  private static String UPLOAD_DIR;
+//  @Value("${spring.servlet.location}")
+  private static String UPLOAD_DIR = "C:\\Users\\devin\\Desktop\\ploggingImages";
 
   @Transactional
   public void imageSave(MultipartFile image, String identify, Long identifyNo) throws IOException {
 
     String newImageName = UUID.randomUUID() + "_" + image.getOriginalFilename();
     String filePath = UPLOAD_DIR + newImageName;
+
+    log.info("파일 URL : " + filePath);
 
     image.transferTo(new File(filePath));
 
@@ -52,7 +56,7 @@ public class ImageService {
       Optional<MemberEntity> memberCheck = memberRepository.findById(identifyNo);
       MemberEntity memberEntity = memberCheck.get();
 
-      MemberImageEntity memberImage = MemberImageConstructor.memberImageTransfer(image, newImageName, memberEntity);
+      MemberImageEntity memberImage = MemberImageConstructor.memberImageTransfer(image, newImageName, filePath, memberEntity);
 
       memberImageRepository.save(memberImage);
 
@@ -61,7 +65,7 @@ public class ImageService {
       Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(identifyNo);
       PloggingRecordEntity recordEntity = recordCheck.get();
 
-      PloggingImageEntity recordImage = PloggingImageConstructor.ploggingImageTransfer(image, newImageName, recordEntity);
+      PloggingImageEntity recordImage = PloggingImageConstructor.ploggingImageTransfer(image, newImageName, filePath, recordEntity);
 
       ploggingImageRepository.save(recordImage);
 
@@ -70,7 +74,7 @@ public class ImageService {
       Optional<PloggingPartyEntity> partyCheck = ploggingPartyRepository.findById(identifyNo);
       PloggingPartyEntity partyEntity = partyCheck.get();
 
-      PloggingPartyImageEntity partyImage = PloggingPartyImageConstructor.PloggingPartyImageTransfer(image, newImageName, partyEntity);
+      PloggingPartyImageEntity partyImage = PloggingPartyImageConstructor.PloggingPartyImageTransfer(image, newImageName, filePath, partyEntity);
 
       ploggingPartyImageRepository.save(partyImage);
       

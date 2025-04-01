@@ -24,7 +24,7 @@ public class SignController {
   private final SignService signService;
 
   @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<String> signUp(@RequestPart String memberDtoJson,
+  public ResponseEntity<String> signUp(@RequestPart ("json") String memberDtoJson,
                                        @RequestPart (value = "file", required = false) MultipartFile memberImage) throws IOException {
 
     ObjectMapper objectMapper = new ObjectMapper();

@@ -40,7 +40,7 @@ public class MemberConstructor {
   }
 
   //DB에 저장된 회원 데이터를 가져오는 용도(토큰 발급 및 마이페이지 정보 조회용)
-  public static MemberDto memberEntityToDto(MemberEntity memberEntity) {
+  public static MemberDto memberEntityToDto(MemberEntity memberEntity, String filePath) {
 
     MemberDto memberDto = new MemberDto();
 
@@ -50,6 +50,8 @@ public class MemberConstructor {
     memberDto.setMemberAddress(memberEntity.getMemberAddress());
     memberDto.setMemberIntro(memberEntity.getMemberIntro());
     memberDto.setMemberAttachImage(memberEntity.getMemberAttachImage());
+    memberDto.setFilePath(filePath);
+
     memberDto.setPloggingPoint(memberEntity.getPloggingPoint());
     memberDto.setPloggingDistanceTotal(memberEntity.getPloggingDistanceTotal());
 
