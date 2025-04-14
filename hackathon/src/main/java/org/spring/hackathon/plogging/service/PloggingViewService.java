@@ -9,6 +9,7 @@ import org.spring.hackathon.plogging.repository.PloggingRecordRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,17 +20,36 @@ public class PloggingViewService {
 
   private final PloggingRecordRepository recordRepository;
 
-  public List<PloggingRecordDto> recordReadView(Long memberNo) {
+  public List<PloggingRecordDto> recordThisMonthView(Long memberNo) {
 
     LocalDate today = LocalDate.now();
     LocalDate startDate = today.withDayOfMonth(1);
-    LocalDate endDate = today.withDayOfMonth(today.lengthOfMonth());
+    LocalDate lastDate = today.withDayOfMonth(today.lengthOfMonth());
 
     log.info("오늘 : " + today);
     log.info("시작 날짜 : " + startDate);
-    log.info("끝 날짜 : " + endDate);
+    log.info("끝 날짜 : " + lastDate);
 
-    List<PloggingRecordEntity> recordEntityList = recordRepository.findByIdAndMonth(memberNo, startDate, endDate);
+    List<PloggingRecordEntity> recordEntityList = recordRepository.findByIdAndMonth(memberNo, startDate, lastDate);
+
+    List<PloggingRecordDto> recordDtoList = recordEntityList.stream()
+        .map(PloggingRecordConstructor::ploggingRecordMonthView)
+        .collect(Collectors.toList());
+
+    return recordDtoList;
+
+  }
+
+  public List<PloggingRecordDto> recordOtherMonthView(Long memberNo, YearMonth selectDate) {
+
+    LocalDate startDate = selectDate.atDay(1);
+    LocalDate lastDate = selectDate.atEndOfMonth();
+
+    log.info("선택 날짜 : " + selectDate);
+    log.info("시작 날짜 : " + startDate);
+    log.info("끝 날짜 : " + lastDate);
+
+    List<PloggingRecordEntity> recordEntityList = recordRepository.findByIdAndMonth(memberNo, startDate, lastDate);
 
     List<PloggingRecordDto> recordDtoList = recordEntityList.stream()
         .map(PloggingRecordConstructor::ploggingRecordMonthView)

@@ -49,7 +49,7 @@ public class PloggingRecordController {
     ObjectMapper objectMapper = new ObjectMapper();
 
     try {
-      if(!recordDtoJson.isEmpty() || !locationJson.isEmpty()) {
+      if(recordDtoJson.isEmpty() || locationJson.isEmpty()) {
         return ResponseEntity.badRequest().body("Data Invalid");
       }
 

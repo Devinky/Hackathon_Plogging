@@ -39,7 +39,7 @@ public class ImageService {
   private final PloggingPartyImageRepository ploggingPartyImageRepository;
 
 //  @Value("${spring.servlet.location}")
-  private static String UPLOAD_DIR = "C:\\Users\\devin\\Desktop\\ploggingImages";
+  private static String UPLOAD_DIR = "C:\\Users\\devin\\Documents\\ploggingImages";
 
   @Transactional
   public void imageSave(MultipartFile image, String identify, Long identifyNo) throws IOException {

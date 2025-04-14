@@ -40,7 +40,11 @@ public class PloggingRecordEntity extends BaseEntity {
   //플로깅을 몇시간 했는지
   private String ploggingTime;
 
+  //메모
   private String ploggingMemo;
+
+  //1회 플로깅으로 얻은 포인트
+  private int getPoint;
 
   //이미지 첨부 여부 구분을 위한 컬럼(이미지 포함O = 1, 포함X = 0)
   @Column(nullable = false)
