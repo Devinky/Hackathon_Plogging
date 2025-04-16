@@ -65,7 +65,7 @@ public class MemberEntity extends BaseEntity {
   
   //총 플로깅 거리
   @Column(nullable = false)
-  private float ploggingDistanceTotal;
+  private double ploggingDistanceTotal;
 
   //Join 관계들
   //플로깅 기록 테이블과 매핑(1:N 관계)

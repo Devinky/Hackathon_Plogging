@@ -1,6 +1,7 @@
 package org.spring.hackathon.plogging.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.spring.hackathon.common.service.ImageService;
 import org.spring.hackathon.member.constructor.MemberConstructor;
 import org.spring.hackathon.member.domain.MemberEntity;
@@ -24,6 +25,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class PloggingRecordService {
 
   private final JwtProvider jwtProvider;
@@ -137,8 +139,12 @@ public class PloggingRecordService {
     Optional<MemberEntity> memberCheck = memberRepository.findById(finalRecordGet.getRecordJoinMember().getMemberNo());
     MemberEntity updateMemberGet = memberCheck.get();
 
-    //종료 후 입력될 값들 계산(총 운동 거리, 운동으로 획득한 포인트)
-    float totalDistance = updateMemberGet.getPloggingDistanceTotal() + Math.round(finalRecordGet.getPloggingDistance());
+    //운동 거리 계산, 1km를 기준으로 계산하여 소수점 둘째 자리 이후는 버린다
+    double calcDistance = Math.floor(finalRecordGet.getPloggingDistance() * 100) / 100.0;
+    log.info("이동 거리 : " + calcDistance);
+    double totalDistance = updateMemberGet.getPloggingDistanceTotal() + calcDistance;
+    log.info("총 거리 : " + totalDistance);
+
     //1km당 100포인트로 환산, 소숫점은 버린다
     int distanceCalcForPoint = (int) (finalRecordGet.getPloggingDistance() * 100);
     int totalPoint = distanceCalcForPoint + updateMemberGet.getPloggingPoint();
@@ -150,7 +156,7 @@ public class PloggingRecordService {
     }
 
     //플로깅이 종료됐을 때 입력되는 정보들을 저장
-    PloggingRecordEntity finalRecord = PloggingRecordConstructor.ploggingEndTransfer(recordDto, finalRecordGet);
+    PloggingRecordEntity finalRecord = PloggingRecordConstructor.ploggingEndTransfer(recordDto, finalRecordGet, distanceCalcForPoint);
     MemberEntity updateMember = MemberConstructor.memberPloggingEndTransfer(updateMemberGet, totalDistance, totalPoint);
 
     ploggingRecordRepository.save(finalRecord);

@@ -21,6 +21,10 @@ public class PloggingRecordDto {
 
   private String ploggingTime;
 
+  private String ploggingMemo;
+
+  private int getPoint;
+
   private int recordAttachImage;
 
   private String filePath;

@@ -60,7 +60,7 @@ public class MemberConstructor {
   }
 
   //플로깅 종료 후 플로깅 한 거리와 얻은 포인트 기록
-  public static MemberEntity memberPloggingEndTransfer(MemberEntity updateMember, float totalDistance, int totalPoint) {
+  public static MemberEntity memberPloggingEndTransfer(MemberEntity updateMember, double totalDistance, int totalPoint) {
 
     updateMember.setPloggingDistanceTotal(totalDistance);
     updateMember.setPloggingPoint(totalPoint);

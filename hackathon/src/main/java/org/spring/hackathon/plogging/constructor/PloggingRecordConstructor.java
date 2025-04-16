@@ -37,11 +37,13 @@ public class PloggingRecordConstructor {
   }
 
   //플로깅 종료
-  public static PloggingRecordEntity ploggingEndTransfer(PloggingRecordDto recordDto, PloggingRecordEntity finalRecord) {
+  public static PloggingRecordEntity ploggingEndTransfer(PloggingRecordDto recordDto, PloggingRecordEntity finalRecord, int distancePoint) {
 
     finalRecord.setTrashCategory(recordDto.getTrashCategory());
     finalRecord.setPloggingTime(recordDto.getPloggingTime());
     finalRecord.setPloggingRecordAttachImage(recordDto.getRecordAttachImage());
+    finalRecord.setPloggingMemo(recordDto.getPloggingMemo());
+    finalRecord.setGetPoint(distancePoint);
 
     return finalRecord;
 
