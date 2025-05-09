@@ -46,11 +46,11 @@ public class PloggingRecordService {
     String memberId = jwtProvider.getUserId(token.substring(7));
 
     if(!memberCheck.isPresent()) {
-      throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가!)");
+      throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가)");
     }
 
     if(!memberEntityGet.getMemberId().equals(memberId)) {
-      throw new RuntimeException("정상적인 접근이 아닙니다. (로그인 정보 불일치!)");
+      throw new RuntimeException("정상적인 접근이 아닙니다. (로그인 정보 불일치)");
     }
 
     //플로깅 테이블 생성

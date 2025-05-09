@@ -24,27 +24,28 @@ public class MemberController {
 
   //회원 정보 조회
   @GetMapping("/mypage/{memberNo}")
-  public ResponseEntity<MemberDto> memberMyPage(@PathVariable Long memberNo) {
+  public ResponseEntity<MemberDto> memberMyPage(@PathVariable Long memberNo, @RequestHeader("Authorization") String token) {
 
-    MemberDto memberDto = memberService.memberMyPageView(memberNo);
+    MemberDto memberDto = memberService.memberMyPageView(memberNo, token);
     return new ResponseEntity<>(memberDto, HttpStatus.valueOf(200));
 
   }
 
   //회원 정보 수정
   @PatchMapping("/update/{memberNo}")
-  public ResponseEntity<String> memberInfoUpdate(@PathVariable Long memberNo, @RequestBody MemberDto dto) {
+  public ResponseEntity<String> memberInfoUpdate(@PathVariable Long memberNo, @RequestBody MemberDto dto,
+                                                 @RequestHeader("Authorization") String token) {
 
-    MemberDto memberDto = memberService.memberInfoUpdate(memberNo, dto);
+    MemberDto memberDto = memberService.memberInfoUpdate(memberNo, dto, token);
     return ResponseEntity.ok().body("수정 완료");
 
   }
 
   //회원 탈퇴
   @DeleteMapping("/delete/{memberNo}")
-  public ResponseEntity<String> memberDelete(@PathVariable Long memberNo) {
+  public ResponseEntity<String> memberDelete(@PathVariable Long memberNo, @RequestHeader("Authorization") String token) {
 
-    memberService.memberDelete(memberNo);
+    memberService.memberDelete(memberNo, token);
     return ResponseEntity.ok().body("탈퇴 완료");
 
   }
