@@ -20,7 +20,7 @@ public class PloggingViewService {
 
   private final PloggingRecordRepository recordRepository;
 
-  public List<PloggingRecordDto> recordThisMonthView(Long memberNo) {
+  public List<PloggingRecordDto> recordThisMonthView(Long memberKey) {
 
     LocalDate today = LocalDate.now();
     LocalDate startDate = today.withDayOfMonth(1);
@@ -30,7 +30,7 @@ public class PloggingViewService {
     log.info("시작 날짜 : " + startDate);
     log.info("끝 날짜 : " + lastDate);
 
-    List<PloggingRecordEntity> recordEntityList = recordRepository.findByIdAndMonth(memberNo, startDate, lastDate);
+    List<PloggingRecordEntity> recordEntityList = recordRepository.findByIdAndMonth(memberKey, startDate, lastDate);
 
     List<PloggingRecordDto> recordDtoList = recordEntityList.stream()
         .map(PloggingRecordConstructor::ploggingRecordMonthView)
@@ -40,7 +40,7 @@ public class PloggingViewService {
 
   }
 
-  public List<PloggingRecordDto> recordOtherMonthView(Long memberNo, YearMonth selectDate) {
+  public List<PloggingRecordDto> recordOtherMonthView(Long memberKey, YearMonth selectDate) {
 
     LocalDate startDate = selectDate.atDay(1);
     LocalDate lastDate = selectDate.atEndOfMonth();
@@ -49,7 +49,7 @@ public class PloggingViewService {
     log.info("시작 날짜 : " + startDate);
     log.info("끝 날짜 : " + lastDate);
 
-    List<PloggingRecordEntity> recordEntityList = recordRepository.findByIdAndMonth(memberNo, startDate, lastDate);
+    List<PloggingRecordEntity> recordEntityList = recordRepository.findByIdAndMonth(memberKey, startDate, lastDate);
 
     List<PloggingRecordDto> recordDtoList = recordEntityList.stream()
         .map(PloggingRecordConstructor::ploggingRecordMonthView)
@@ -59,4 +59,6 @@ public class PloggingViewService {
 
   }
 
+  public void ploggingRecordDelete(Long memberKey, String token) {
+  }
 }

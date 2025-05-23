@@ -10,7 +10,7 @@ import org.spring.hackathon.member.domain.MemberEntity;
 @NoArgsConstructor
 public class PloggingPartyDto {
 
-  private Long ploggingPartyNo;
+  private Long ploggingPartyKey;
 
   private String partyOwner;
 

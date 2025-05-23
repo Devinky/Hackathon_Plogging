@@ -23,25 +23,13 @@ public class SignController {
 
   private final SignService signService;
 
-  @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<String> signUp(@RequestPart ("json") String memberDtoJson,
-                                       @RequestPart (value = "file", required = false) MultipartFile memberImage) throws IOException {
-
-    ObjectMapper objectMapper = new ObjectMapper();
+  @PostMapping("/signup")
+  public ResponseEntity<String> signUp(@RequestBody MemberDto memberDto) {
 
     log.info("====================================회원가입 실행====================================");
-    log.info("가입 정보 : " + memberDtoJson);
+    log.info("가입 정보 : " + memberDto);
 
-    if (!memberImage.isEmpty()) {
-      log.info("파일이 첨부됨.");
-      log.info("첨부파일명 : " + memberImage.getOriginalFilename());
-    } else {
-      log.info("파일 없음.");
-    }
-
-    MemberDto memberDto = objectMapper.readValue(memberDtoJson, MemberDto.class);
-    signService.signUp(memberDto, memberImage);
-
+    signService.signUp(memberDto);
     return ResponseEntity.ok().body("회원가입 완료");
 
   }

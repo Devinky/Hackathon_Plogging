@@ -30,7 +30,7 @@ public class SignService {
 
   //회원가입
   @Transactional
-  public String signUp(MemberDto memberDto, MultipartFile memberImage) throws IOException {
+  public String signUp(MemberDto memberDto) {
 
     String memberId = memberDto.getMemberId();
 
@@ -43,13 +43,7 @@ public class SignService {
     //Dto -> Entity 변환생성자를 이용하여 Entity에 정보를 Set
     MemberEntity memberEntity = MemberConstructor.memberDtoToEntity(memberDto, passwordEncoder);
     //회원정보를 최종적으로 Repository에 저장하고 입력된 기본키를 가져온다(이미지 처리 로직으로 보내기 위함)
-    Long identifyNo = memberRepository.save(memberEntity).getMemberNo();
-
-    if(!memberImage.isEmpty()){
-      //첨부된 이미지 처리
-      String identify = "member";
-      imageService.imageSave(memberImage, identify, identifyNo);
-    }
+    Long identifyNo = memberRepository.save(memberEntity).getMemberKey();
 
     return "회원가입 완료";
 
@@ -64,7 +58,7 @@ public class SignService {
         .orElseThrow(() -> new AppException(ErrorCode.MEMBERID_NOT_FOUND, id + " 로그인 실패 : 회원 ID를 찾을 수 없습니다."));
 
     //비밀번호 틀렸을 때
-    if(passwordEncoder.matches(selectedMember.getMemberPassword(), password)) {
+    if(!passwordEncoder.matches(password, selectedMember.getMemberPassword())) {
       System.out.println("암호 : " + selectedMember.getMemberPassword() + " / 비밀번호 : " + password);
       throw new AppException(ErrorCode.INVALID_PASSWORD, "로그인 실패 : 비밀번호가 일치하지 않습니다.");
     }

@@ -15,8 +15,8 @@ public class PloggingLocationEntity extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "plogging_location_no")
-  private Long locationNo;
+  @Column(name = "plogging_location_key")
+  private Long locationKey;
 
   @Column(nullable = false)
   private double latitude;

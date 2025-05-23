@@ -24,8 +24,8 @@ public class PloggingRecordEntity extends BaseEntity {
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "plogging_record_no")
-  public Long recordNo;
+  @Column(name = "plogging_record_key")
+  public Long recordKey;
 
   //플로깅 한 거리
   private double ploggingDistance;
@@ -37,7 +37,7 @@ public class PloggingRecordEntity extends BaseEntity {
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate ploggingDate;
 
-  //플로깅을 몇시간 했는지
+  //플로깅을 몇 시간 했는지
   private String ploggingTime;
 
   //메모

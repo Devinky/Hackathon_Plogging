@@ -1,6 +1,5 @@
 package org.spring.hackathon.plogging.constructor;
 
-import org.spring.hackathon.member.domain.MemberImageEntity;
 import org.spring.hackathon.plogging.domain.PloggingImageEntity;
 import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
 import org.springframework.web.multipart.MultipartFile;

@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class MemberDto {
 
-  public Long memberNo;
+  public Long memberKey;
 
   private String memberId;
 
@@ -21,14 +21,10 @@ public class MemberDto {
 
   private String memberAddress;
 
-  private int memberAttachImage;
-
   private String memberIntro;
 
   private int ploggingPoint;
 
   private double ploggingDistanceTotal;
-
-  private String filePath;
 
 }

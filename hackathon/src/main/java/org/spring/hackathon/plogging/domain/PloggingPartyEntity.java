@@ -25,8 +25,8 @@ public class PloggingPartyEntity extends BaseEntity {
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "plogging_party_no")
-  public Long partyNo;
+  @Column(name = "plogging_party_key")
+  public Long partyKey;
 
   //방 이름
   @Column(nullable = false)

@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class PloggingLocationDto {
 
-  private Long ploggingLocationNo;
+  private Long ploggingLocationNoKey;
 
   private double latitude;
 

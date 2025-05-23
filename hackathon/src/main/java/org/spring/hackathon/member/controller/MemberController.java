@@ -23,29 +23,29 @@ public class MemberController {
   private final MemberService memberService;
 
   //회원 정보 조회
-  @GetMapping("/mypage/{memberNo}")
-  public ResponseEntity<MemberDto> memberMyPage(@PathVariable Long memberNo, @RequestHeader("Authorization") String token) {
+  @GetMapping("/mypage/{memberKey}")
+  public ResponseEntity<MemberDto> memberMyPage(@PathVariable Long memberKey, @RequestHeader("Authorization") String token) {
 
-    MemberDto memberDto = memberService.memberMyPageView(memberNo, token);
+    MemberDto memberDto = memberService.memberMyPageView(memberKey, token);
     return new ResponseEntity<>(memberDto, HttpStatus.valueOf(200));
 
   }
 
   //회원 정보 수정
-  @PatchMapping("/update/{memberNo}")
-  public ResponseEntity<String> memberInfoUpdate(@PathVariable Long memberNo, @RequestBody MemberDto dto,
+  @PatchMapping("/update/{memberKey}")
+  public ResponseEntity<String> memberInfoUpdate(@PathVariable Long memberKey, @RequestBody MemberDto dto,
                                                  @RequestHeader("Authorization") String token) {
 
-    MemberDto memberDto = memberService.memberInfoUpdate(memberNo, dto, token);
+    MemberDto memberDto = memberService.memberInfoUpdate(memberKey, dto, token);
     return ResponseEntity.ok().body("수정 완료");
 
   }
 
   //회원 탈퇴
-  @DeleteMapping("/delete/{memberNo}")
-  public ResponseEntity<String> memberDelete(@PathVariable Long memberNo, @RequestHeader("Authorization") String token) {
+  @DeleteMapping("/delete/{memberKey}")
+  public ResponseEntity<String> memberDelete(@PathVariable Long memberKey, @RequestHeader("Authorization") String token) {
 
-    memberService.memberDelete(memberNo, token);
+    memberService.memberDelete(memberKey, token);
     return ResponseEntity.ok().body("탈퇴 완료");
 
   }

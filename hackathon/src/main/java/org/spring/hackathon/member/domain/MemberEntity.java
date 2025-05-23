@@ -24,8 +24,8 @@ public class MemberEntity extends BaseEntity {
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "member_no")
-  public Long memberNo;
+  @Column(name = "member_key")
+  public Long memberKey;
 
   //회원 권한
   @Enumerated(EnumType.STRING)
@@ -50,10 +50,6 @@ public class MemberEntity extends BaseEntity {
   //회원 주소
   @Column(nullable = false)
   private String memberAddress;
-
-  //회원 프로필 사진 첨부 여부(첨부 = 1, 첨부X = 0)
-  @Column(nullable = false)
-  private int memberAttachImage;
 
   //자기소개
   @Column(length = 5000)

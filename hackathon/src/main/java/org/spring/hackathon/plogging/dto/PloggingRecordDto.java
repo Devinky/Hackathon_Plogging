@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 public class PloggingRecordDto {
 
-  private Long ploggingRecordNo;
+  private Long ploggingRecordKey;
 
   private double ploggingDistance;
 

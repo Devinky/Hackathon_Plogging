@@ -4,14 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.spring.hackathon.member.constructor.MemberConstructor;
 import org.spring.hackathon.member.domain.MemberEntity;
 import org.spring.hackathon.member.dto.MemberDto;
-import org.spring.hackathon.member.repository.MemberImageRepository;
 import org.spring.hackathon.member.repository.MemberRepository;
 import org.spring.hackathon.security.utils.JwtProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Member;
 import java.util.Optional;
 
 @Service
@@ -20,13 +18,12 @@ public class MemberService {
 
   private final JwtProvider jwtProvider;
   private final MemberRepository memberRepository;
-  private final MemberImageRepository memberImageRepository;
   private final PasswordEncoder passwordEncoder;
 
   //마이페이지 회원 정보 조회
-  public MemberDto memberMyPageView(Long memberNo, String token) {
+  public MemberDto memberMyPageView(Long memberKey, String token) {
 
-    Optional<MemberEntity> memberCheck = memberRepository.findById(memberNo);
+    Optional<MemberEntity> memberCheck = memberRepository.findById(memberKey);
     MemberEntity memberEntityGet = memberCheck.get();
 
     String memberId = jwtProvider.getUserId(token.substring(7));
@@ -39,27 +36,17 @@ public class MemberService {
       throw new RuntimeException("정상적인 접근이 아닙니다(로그인 정보 불일치)");
     }
 
-    if(memberEntityGet.getMemberAttachImage() == 1) {
+    MemberDto memberDto = MemberConstructor.memberEntityToDto(memberEntityGet);
 
-      String filePath = memberImageRepository.findFilePathWithMemberFk(memberNo);
-      MemberDto memberDto = MemberConstructor.memberEntityToDto(memberEntityGet, filePath);
-
-      return memberDto;
-
-    } else {
-
-      MemberDto memberDto = MemberConstructor.memberEntityToDto(memberEntityGet, null);
-      return memberDto;
-
-    }
+    return memberDto;
 
   }
 
   //회원 정보 수정
   @Transactional
-  public MemberDto memberInfoUpdate(Long memberNo, MemberDto dto, String token) {
+  public MemberDto memberInfoUpdate(Long memberKey, MemberDto dto, String token) {
 
-    Optional<MemberEntity> memberCheck = memberRepository.findById(memberNo);
+    Optional<MemberEntity> memberCheck = memberRepository.findById(memberKey);
     MemberEntity memberEntityGet = memberCheck.get();
 
     String memberId = jwtProvider.getUserId(token.substring(7));
@@ -79,7 +66,6 @@ public class MemberService {
       memberEntityGet.setMemberEmail(dto.getMemberEmail());
       memberEntityGet.setMemberAddress(dto.getMemberAddress());
       memberEntityGet.setMemberIntro(dto.getMemberIntro());
-      memberEntityGet.setMemberAttachImage(dto.getMemberAttachImage());
 
       memberRepository.save(memberEntityGet);
 
@@ -90,9 +76,9 @@ public class MemberService {
     }
    
   //회원 탈퇴
-  public void memberDelete(Long memberNo, String token) {
+  public void memberDelete(Long memberKey, String token) {
 
-    Optional<MemberEntity> memberCheck = memberRepository.findById(memberNo);
+    Optional<MemberEntity> memberCheck = memberRepository.findById(memberKey);
     MemberEntity memberEntityGet = memberCheck.get();
 
     String memberId = jwtProvider.getUserId(token.substring(7));
@@ -105,7 +91,7 @@ public class MemberService {
       throw new RuntimeException("정상적인 접근이 아닙니다(로그인 정보 불일치)");
     }
 
-    memberRepository.deleteById(memberNo);
+    memberRepository.deleteById(memberKey);
     
   }
 

@@ -10,7 +10,7 @@ import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
 @NoArgsConstructor
 public class PloggingImageDto {
 
-  public Long ploggingImageNo;
+  public Long ploggingImageKey;
 
   //사용자가 지정해놓은 파일 이름
   private String ploggingImageNameOrigin;

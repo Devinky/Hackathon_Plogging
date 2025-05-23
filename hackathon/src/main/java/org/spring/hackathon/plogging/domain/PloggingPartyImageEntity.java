@@ -18,8 +18,8 @@ public class PloggingPartyImageEntity {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "plogging_party_image_No")
-  private Long partyImageNo;
+  @Column(name = "plogging_party_image_key")
+  private Long partyImageKey;
   
   //사진 파일 원본 이름
   private String partyImageOriginName;

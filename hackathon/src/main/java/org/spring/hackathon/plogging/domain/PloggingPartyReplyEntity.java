@@ -17,8 +17,8 @@ public class PloggingPartyReplyEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reply_no")
-    private Long replyNo;
+    @Column(name = "reply_key")
+    private Long replyKey;
 
     //댓글 내용
     @Column(nullable = false)

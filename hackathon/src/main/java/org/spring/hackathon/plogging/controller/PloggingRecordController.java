@@ -24,19 +24,19 @@ public class PloggingRecordController {
   //플로깅 시작 API
   @GetMapping("/start/{memberNo}")
   public ResponseEntity<Long> ploggingStart(@RequestBody PloggingLocationDto location,
-                                            @RequestHeader("Authorization") String token, @PathVariable Long memberNo) {
+                                            @RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
 
     //플로깅을 시작한 지점의 위치를 보내고 기록이 저장되는 테이블의 id를 반환
-    Long ploggingRecordNo = ploggingService.ploggingStartDo(location, token, memberNo);
+    Long ploggingRecordNo = ploggingService.ploggingStartDo(location, token, memberKey);
     return ResponseEntity.ok().body(ploggingRecordNo);
 
   }
 
   //위치 좌표 체크, 업데이트 API
   @GetMapping("/location/{recordNo}")
-  public ResponseEntity<String> ploggindLocationCheck(@RequestBody PloggingLocationDto location, @PathVariable Long recordNo) {
+  public ResponseEntity<String> ploggindLocationCheck(@RequestBody PloggingLocationDto location, @PathVariable Long recordKey) {
 
-    ploggingService.ploggingLocationUpdate(location, recordNo);
+    ploggingService.ploggingLocationUpdate(location, recordKey);
     return ResponseEntity.ok("Location Check OK");
   }
 
@@ -44,7 +44,7 @@ public class PloggingRecordController {
   @GetMapping("/end/{recordNo}")
   public ResponseEntity<String> ploggingEnd(@RequestPart ("record") String recordDtoJson, @RequestPart ("location") String locationJson,
                                             @RequestPart (value = "file", required = false) MultipartFile ploggingImage,
-                                            @PathVariable Long recordNo) throws JsonProcessingException, IOException {
+                                            @PathVariable Long recordKey) throws JsonProcessingException, IOException {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -56,7 +56,7 @@ public class PloggingRecordController {
     PloggingRecordDto recordDto = objectMapper.readValue(recordDtoJson, new TypeReference<PloggingRecordDto>() {});
     PloggingLocationDto location = objectMapper.readValue(locationJson, PloggingLocationDto.class);
 
-    ploggingService.ploggingEndDo(recordDto, location, recordNo, ploggingImage);
+    ploggingService.ploggingEndDo(recordDto, location, recordKey, ploggingImage);
 
     return ResponseEntity.ok("Plogging Done");
 

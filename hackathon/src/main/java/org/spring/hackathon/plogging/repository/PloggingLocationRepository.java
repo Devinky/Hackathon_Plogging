@@ -12,7 +12,7 @@ import java.util.List;
 public interface PloggingLocationRepository extends JpaRepository<PloggingLocationEntity, Long> {
 
   //특정 운동 기록에 속한 모든 위치 좌표를 조회
-  @Query(value = "SELECT * FROM plogging_location WHERE record_location_fk = :recordNo", nativeQuery = true)
-  List<PloggingLocationEntity> findAllByPloggingRecordForeignKey(@Param("recordNo") Long ploggingRecordId);
+  @Query(value = "SELECT * FROM plogging_location WHERE record_location_fk = :recordKey", nativeQuery = true)
+  List<PloggingLocationEntity> findAllByPloggingRecordForeignKey(@Param("recordKey") Long ploggingRecordId);
 
 }
