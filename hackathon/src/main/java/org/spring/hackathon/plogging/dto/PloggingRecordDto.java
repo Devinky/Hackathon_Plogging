@@ -27,6 +27,4 @@ public class PloggingRecordDto {
 
   private int recordAttachImage;
 
-  private String filePath;
-
 }

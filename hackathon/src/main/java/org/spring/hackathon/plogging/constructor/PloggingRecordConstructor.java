@@ -54,6 +54,7 @@ public class PloggingRecordConstructor {
 
     PloggingRecordDto recordDto = new PloggingRecordDto();
 
+    recordDto.setPloggingRecordKey(recordEntity.getRecordKey());
     recordDto.setPloggingDistance(recordEntity.getPloggingDistance());
     recordDto.setPloggingDate(recordEntity.getPloggingDate());
     recordDto.setPloggingTime(recordEntity.getPloggingTime());

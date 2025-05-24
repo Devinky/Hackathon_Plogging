@@ -23,8 +23,8 @@ public class PloggingRecordController {
 
   //플로깅 시작 API
   @GetMapping("/start/{memberNo}")
-  public ResponseEntity<Long> ploggingStart(@RequestBody PloggingLocationDto location,
-                                            @RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
+  public ResponseEntity<Long> ploggingStart(@RequestHeader("Authorization") String token,
+                                            @RequestBody PloggingLocationDto location, @PathVariable Long memberKey) {
 
     //플로깅을 시작한 지점의 위치를 보내고 기록이 저장되는 테이블의 id를 반환
     Long ploggingRecordNo = ploggingService.ploggingStartDo(location, token, memberKey);

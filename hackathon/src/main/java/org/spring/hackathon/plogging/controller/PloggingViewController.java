@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class PloggingViewController {
   private final PloggingViewService ploggingViewService;
 
   @GetMapping("/{memberKey}")
-  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordView (@PathVariable Long memberKey, @RequestHeader("Authorization") String token) {
+  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordView(@RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
 
     List<PloggingRecordDto> getRecordList = ploggingViewService.recordThisMonthView(memberKey);
     return new ResponseEntity<>(getRecordList, HttpStatus.valueOf(200));
@@ -31,19 +32,28 @@ public class PloggingViewController {
   }
 
   @GetMapping("/otherMonth/{memberKey}/{selectDate}")
-  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordOtherMonthView (@PathVariable Long memberKey,
-                                                                               @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth selectDate,
-                                                                               @RequestHeader("Authorization") String token) {
+  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordOtherMonthView(@RequestHeader("Authorization") String token,
+                                                                              @PathVariable Long memberKey,
+                                                                              @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth selectDate) {
 
     List<PloggingRecordDto> getRecordList = ploggingViewService.recordOtherMonthView(memberKey, selectDate);
     return new ResponseEntity<>(getRecordList, HttpStatus.valueOf(200));
 
   }
 
-  @GetMapping("/{memberKey}")
-  public ResponseEntity<String> ploggingDelete(@PathVariable Long memberKey, @RequestHeader("Authorization") String token) {
+  @GetMapping("/detailView/{memberKey}/{recordKey}")
+  public ResponseEntity<PloggingRecordDto> ploggingRecordDetailView(@RequestHeader("Authorization") String token,
+                                                                    @PathVariable Long memberKey, @PathVariable Long recordKey) {
 
-    ploggingViewService.ploggingRecordDelete(memberKey, token);
+    PloggingRecordDto getRecordDetail = ploggingViewService.recordDetailView(token, memberKey, recordKey);
+    return new ResponseEntity<>(getRecordDetail, HttpStatus.valueOf(200));
+
+  }
+
+  @GetMapping("/delete/{memberKey}")
+  public ResponseEntity<String> ploggingDelete(@RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
+
+    ploggingViewService.ploggingRecordDelete(token, memberKey);
     return ResponseEntity.ok().body("삭제 완료");
 
   }

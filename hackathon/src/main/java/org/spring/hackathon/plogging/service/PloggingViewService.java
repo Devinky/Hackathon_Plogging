@@ -2,9 +2,14 @@ package org.spring.hackathon.plogging.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.spring.hackathon.plogging.constructor.PloggingLocationConstructor;
 import org.spring.hackathon.plogging.constructor.PloggingRecordConstructor;
+import org.spring.hackathon.plogging.domain.PloggingLocationEntity;
 import org.spring.hackathon.plogging.domain.PloggingRecordEntity;
+import org.spring.hackathon.plogging.dto.PloggingLocationDto;
+import org.spring.hackathon.plogging.dto.PloggingRecordAndCoodinateDto;
 import org.spring.hackathon.plogging.dto.PloggingRecordDto;
+import org.spring.hackathon.plogging.repository.PloggingLocationRepository;
 import org.spring.hackathon.plogging.repository.PloggingRecordRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +24,7 @@ import java.util.stream.Collectors;
 public class PloggingViewService {
 
   private final PloggingRecordRepository recordRepository;
+  private final PloggingLocationRepository locationRepository;
 
   public List<PloggingRecordDto> recordThisMonthView(Long memberKey) {
 
@@ -59,6 +65,19 @@ public class PloggingViewService {
 
   }
 
-  public void ploggingRecordDelete(Long memberKey, String token) {
+  public PloggingRecordAndCoodinateDto recordDetailView(String token, Long memberKey, Long recordKey) {
+
+    List<PloggingLocationEntity> locationEntityList = locationRepository.findAllByPloggingRecordForeignKey(recordKey);
+
+    List<PloggingLocationDto> locationDtoList = locationEntityList.stream()
+            .map(PloggingLocationConstructor::coordinateGet)
+            .collect(Collectors.toList());
+
+    return locationDtoList;
+
   }
+
+  public void ploggingRecordDelete(String token, Long memberKey) {
+  }
+
 }
