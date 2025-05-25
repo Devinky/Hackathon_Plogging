@@ -3,6 +3,7 @@ package org.spring.hackathon.plogging.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.bytebuddy.asm.Advice;
+import org.spring.hackathon.plogging.dto.PloggingRecordAndCoordinateDto;
 import org.spring.hackathon.plogging.dto.PloggingRecordDto;
 import org.spring.hackathon.plogging.service.PloggingViewService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,34 +25,38 @@ public class PloggingViewController {
   private final PloggingViewService ploggingViewService;
 
   @GetMapping("/{memberKey}")
-  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordView(@RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
+  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordView
+      (@RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
 
-    List<PloggingRecordDto> getRecordList = ploggingViewService.recordThisMonthView(memberKey);
+    List<PloggingRecordDto> getRecordList = ploggingViewService.recordThisMonthView(token, memberKey);
     return new ResponseEntity<>(getRecordList, HttpStatus.valueOf(200));
 
   }
 
   @GetMapping("/otherMonth/{memberKey}/{selectDate}")
-  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordOtherMonthView(@RequestHeader("Authorization") String token,
-                                                                              @PathVariable Long memberKey,
-                                                                              @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth selectDate) {
+  public ResponseEntity<List<PloggingRecordDto>> ploggingRecordOtherMonthView
+      (@RequestHeader("Authorization") String token,
+       @PathVariable Long memberKey,
+       @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth selectDate) {
 
-    List<PloggingRecordDto> getRecordList = ploggingViewService.recordOtherMonthView(memberKey, selectDate);
+    List<PloggingRecordDto> getRecordList = ploggingViewService.recordOtherMonthView(token, memberKey, selectDate);
     return new ResponseEntity<>(getRecordList, HttpStatus.valueOf(200));
 
   }
 
   @GetMapping("/detailView/{memberKey}/{recordKey}")
-  public ResponseEntity<PloggingRecordDto> ploggingRecordDetailView(@RequestHeader("Authorization") String token,
-                                                                    @PathVariable Long memberKey, @PathVariable Long recordKey) {
+  public ResponseEntity<PloggingRecordAndCoordinateDto> ploggingRecordDetailView
+      (@RequestHeader("Authorization") String token,
+       @PathVariable Long memberKey, @PathVariable Long recordKey) {
 
-    PloggingRecordDto getRecordDetail = ploggingViewService.recordDetailView(token, memberKey, recordKey);
+    PloggingRecordAndCoordinateDto getRecordDetail = ploggingViewService.recordDetailView(token, memberKey, recordKey);
     return new ResponseEntity<>(getRecordDetail, HttpStatus.valueOf(200));
 
   }
 
   @GetMapping("/delete/{memberKey}")
-  public ResponseEntity<String> ploggingDelete(@RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
+  public ResponseEntity<String> ploggingDelete
+      (@RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
 
     ploggingViewService.ploggingRecordDelete(token, memberKey);
     return ResponseEntity.ok().body("삭제 완료");

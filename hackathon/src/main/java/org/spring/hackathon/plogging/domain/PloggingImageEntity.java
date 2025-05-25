@@ -19,8 +19,8 @@ public class PloggingImageEntity extends BaseEntity {
   //기본키
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "plogging_image_no")
-  public Long ploggingImageNo;
+  @Column(name = "plogging_image_key")
+  public Long ploggingImageKey;
 
   //원본 이미지 파일명
   private String ploggingImageNameOrigin;

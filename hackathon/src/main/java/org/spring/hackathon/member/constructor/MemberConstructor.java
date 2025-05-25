@@ -26,7 +26,7 @@ public class MemberConstructor {
 
   }
 
-  //로그인 요청시 사용
+  //로그인 요청 시 사용
   public static MemberDto signUpRequest(MemberEntity memberEntity) {
 
     MemberDto memberDto = new MemberDto();
@@ -52,6 +52,19 @@ public class MemberConstructor {
     memberDto.setPloggingDistanceTotal(memberEntity.getPloggingDistanceTotal());
 
     return memberDto;
+
+  }
+
+  //회원 정보 수정용
+  public static MemberEntity memberDataUpdate(PasswordEncoder passwordEncoder, MemberEntity memberEntity, MemberDto memberDto) {
+
+    memberEntity.setMemberPassword(passwordEncoder.encode(memberDto.getMemberPassword()));
+    memberEntity.setMemberName(memberDto.getMemberName());
+    memberEntity.setMemberEmail(memberDto.getMemberEmail());
+    memberEntity.setMemberAddress(memberDto.getMemberAddress());
+    memberEntity.setMemberIntro(memberDto.getMemberIntro());
+
+    return memberEntity;
 
   }
 

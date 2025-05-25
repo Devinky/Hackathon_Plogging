@@ -9,7 +9,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class PloggingRecordAndCoodinateDto {
+public class PloggingRecordAndCoordinateDto {
 
   private PloggingRecordDto recordDto;
 
