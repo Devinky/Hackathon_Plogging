@@ -34,7 +34,7 @@ public class PloggingViewService {
 
   public List<PloggingRecordDto> recordThisMonthView(String token, Long memberKey) {
 
-    MemberEntity memberData = authorizationValidate.tokenValidate(memberKey, token);
+    authorizationValidate.tokenValidate(memberKey, token);
 
     LocalDate today = LocalDate.now();
     LocalDate startDate = today.withDayOfMonth(1);
@@ -56,7 +56,7 @@ public class PloggingViewService {
 
   public List<PloggingRecordDto> recordOtherMonthView(String token, Long memberKey, YearMonth selectDate) {
 
-    MemberEntity memberData = authorizationValidate.tokenValidate(memberKey, token);
+    authorizationValidate.tokenValidate(memberKey, token);
 
     LocalDate startDate = selectDate.atDay(1);
     LocalDate lastDate = selectDate.atEndOfMonth();
@@ -77,7 +77,7 @@ public class PloggingViewService {
 
   public PloggingRecordAndCoordinateDto recordDetailView(String token, Long memberKey, Long recordKey) {
 
-    MemberEntity memberData = authorizationValidate.tokenValidate(memberKey, token);
+    authorizationValidate.tokenValidate(memberKey, token);
 
     List<PloggingLocationEntity> locationEntityList = locationRepository.findAllByPloggingRecordForeignKey(recordKey);
 
@@ -106,7 +106,7 @@ public class PloggingViewService {
 
   public void ploggingRecordDelete(String token, Long memberKey) {
 
-    MemberEntity memberData = authorizationValidate.tokenValidate(memberKey, token);
+    authorizationValidate.tokenValidate(memberKey, token);
 
   }
 

@@ -22,7 +22,7 @@ public class PloggingRecordController {
   private final PloggingRecordService ploggingService;
 
   //플로깅 시작 API
-  @GetMapping("/start/{memberNo}")
+  @GetMapping("/start/{memberKey}")
   public ResponseEntity<Long> ploggingStart(@RequestHeader("Authorization") String token,
                                             @RequestBody PloggingLocationDto location, @PathVariable Long memberKey) {
 
@@ -33,7 +33,7 @@ public class PloggingRecordController {
   }
 
   //위치 좌표 체크, 업데이트 API
-  @GetMapping("/location/{recordNo}")
+  @GetMapping("/location/{recordKey}")
   public ResponseEntity<String> ploggindLocationCheck(@RequestBody PloggingLocationDto location, @PathVariable Long recordKey) {
 
     ploggingService.ploggingLocationUpdate(location, recordKey);
@@ -41,7 +41,7 @@ public class PloggingRecordController {
   }
 
   //플로깅 종료 API
-  @GetMapping("/end/{recordNo}")
+  @GetMapping("/end/{recordKey}")
   public ResponseEntity<String> ploggingEnd(@RequestPart ("record") String recordDtoJson, @RequestPart ("location") String locationJson,
                                             @RequestPart (value = "file", required = false) MultipartFile ploggingImage,
                                             @PathVariable Long recordKey) throws JsonProcessingException, IOException {

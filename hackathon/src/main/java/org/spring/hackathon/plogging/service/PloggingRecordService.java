@@ -13,6 +13,7 @@ import org.spring.hackathon.plogging.dto.PloggingRecordDto;
 import org.spring.hackathon.plogging.dto.PloggingLocationDto;
 import org.spring.hackathon.plogging.repository.PloggingLocationRepository;
 import org.spring.hackathon.plogging.repository.PloggingRecordRepository;
+import org.spring.hackathon.security.utils.AuthorizationValidate;
 import org.spring.hackathon.security.utils.JwtProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,7 @@ import java.util.Optional;
 @Log4j2
 public class PloggingRecordService {
 
-  private final JwtProvider jwtProvider;
+  private final AuthorizationValidate authorizationValidate;
   private final MemberRepository memberRepository;
   private final PloggingRecordRepository ploggingRecordRepository;
   private final PloggingLocationRepository ploggingLocationRepository;
@@ -39,22 +40,10 @@ public class PloggingRecordService {
 
     //전달받은 회원No에 해당하는 회원이 있다면 플로깅 기록 Save
     //회원 넘버가 정확히 넘어왔는지 확인
-    Optional<MemberEntity> memberCheck = memberRepository.findById(memberKey);
-    MemberEntity memberEntityGet = memberCheck.get();
-
-    //현재 로그인한 회원과 운동을 시작하려고 하는 회원 정보값이 일치하는지 검증하기 위한 데이터
-    String memberId = jwtProvider.getUserId(token.substring(7));
-
-    if(!memberCheck.isPresent()) {
-      throw new RuntimeException("정상적인 접근이 아닙니다. (회원 확인 불가)");
-    }
-
-    if(!memberEntityGet.getMemberId().equals(memberId)) {
-      throw new RuntimeException("정상적인 접근이 아닙니다. (로그인 정보 불일치)");
-    }
+    MemberEntity memberData = authorizationValidate.tokenValidate(memberKey, token);
 
     //플로깅 테이블 생성
-    PloggingRecordEntity ploggingRecord = PloggingRecordConstructor.ploggingStartTransfer(memberEntityGet);
+    PloggingRecordEntity ploggingRecord = PloggingRecordConstructor.ploggingStartTransfer(memberData);
     ploggingRecordRepository.save(ploggingRecord);
 
     //플로깅이 시작된 위치 좌표를 좌표 테이블에 저장
@@ -129,7 +118,8 @@ public class PloggingRecordService {
   public void ploggingEndDo(PloggingRecordDto recordDto, PloggingLocationDto location, Long recordKey, MultipartFile image) throws IOException {
 
     //최종적으로 플로깅이 끝났을 때의 위치를 업데이트 처리
-    PloggingLocationEntity locationProcessing = ploggingLocationUpdate(location, recordKey);
+    //PloggingLocationEntity locationProcessing =
+    ploggingLocationUpdate(location, recordKey);
 
     //운동이 진행되는 기록 레코드 get
     Optional<PloggingRecordEntity> recordCheck = ploggingRecordRepository.findById(recordKey);

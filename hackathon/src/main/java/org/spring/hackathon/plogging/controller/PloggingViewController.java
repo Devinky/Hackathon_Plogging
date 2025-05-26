@@ -44,7 +44,7 @@ public class PloggingViewController {
 
   }
 
-  @GetMapping("/detailView/{memberKey}/{recordKey}")
+  @GetMapping("/detail/{memberKey}/{recordKey}")
   public ResponseEntity<PloggingRecordAndCoordinateDto> ploggingRecordDetailView
       (@RequestHeader("Authorization") String token,
        @PathVariable Long memberKey, @PathVariable Long recordKey) {
