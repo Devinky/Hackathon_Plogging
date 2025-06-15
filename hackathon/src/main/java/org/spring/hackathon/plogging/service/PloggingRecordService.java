@@ -118,7 +118,6 @@ public class PloggingRecordService {
   public void ploggingEndDo(PloggingRecordDto recordDto, PloggingLocationDto location, Long recordKey, MultipartFile image) throws IOException {
 
     //최종적으로 플로깅이 끝났을 때의 위치를 업데이트 처리
-    //PloggingLocationEntity locationProcessing =
     ploggingLocationUpdate(location, recordKey);
 
     //운동이 진행되는 기록 레코드 get

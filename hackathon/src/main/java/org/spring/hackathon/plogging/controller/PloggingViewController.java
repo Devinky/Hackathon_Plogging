@@ -54,11 +54,11 @@ public class PloggingViewController {
 
   }
 
-  @GetMapping("/delete/{memberKey}")
+  @GetMapping("/delete/{memberKey}/{recordKey}")
   public ResponseEntity<String> ploggingDelete
-      (@RequestHeader("Authorization") String token, @PathVariable Long memberKey) {
+      (@RequestHeader("Authorization") String token, @PathVariable Long memberKey, @PathVariable Long recordKey) {
 
-    ploggingViewService.ploggingRecordDelete(token, memberKey);
+    ploggingViewService.ploggingRecordDelete(token, memberKey, recordKey);
     return ResponseEntity.ok().body("삭제 완료");
 
   }

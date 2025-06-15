@@ -51,14 +51,14 @@ public class PloggingRecordEntity extends BaseEntity {
   private int ploggingRecordAttachImage;
 
   //Join 관계들
-  //플로깅 이미지 테이블과 연관 매핑(1:N 관계)
-  @OneToMany(mappedBy = "recordJoinImage", cascade = CascadeType.REMOVE, orphanRemoval = true)
-  private List<PloggingImageEntity> ploggingImageList = new ArrayList<>();
-
   //회원 테이블과 연관 매핑(N:1 관계)
   @ManyToOne
   @JoinColumn(name = "member_record_fk")
   private MemberEntity recordJoinMember;
+
+  //플로깅 이미지 테이블과 연관 매핑(1:N 관계)
+  @OneToMany(mappedBy = "recordJoinImage", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<PloggingImageEntity> ploggingImageList = new ArrayList<>();
 
   //플로깅 중 업데이트 되는 위치 좌표를 저장하는 테이블과 연관 매핑(1:N 관계)
   @OneToMany(mappedBy = "locationJoinRecord", cascade =  CascadeType.REMOVE, orphanRemoval = true)
