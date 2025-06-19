@@ -7,10 +7,10 @@
 > - 지속 가능한 미래도시를 위해 서울시민이 이용할 수 있는 서비스를 구현한다.
 > - REST API를 직접 구성해보고 활용하는 것을 목적으로 한다.
 > ### ✅ 개발기간
-> - 2023. 07. 15 ~ 2023. 08. 19
+> - 2023.07.15 ~ 2023.08.19
 > ### ✅ 함께한 팀원
-> - @sj102300
-> - @meanyong
+> - 이승주 [@sj102300](https://github.com/sj102300)
+> - 박민영 [@meanyong](http://github.com/meanyong)
 > ### ✅ 개발환경
 > ![win10 (2)](https://github.com/user-attachments/assets/81e8ee9b-e0c2-485f-8654-8f8258c20b3a)
 > ![java](https://github.com/user-attachments/assets/c02bc8da-8e4f-40e7-a04a-7adcb81d9ac4)
@@ -39,6 +39,6 @@
 >
 > ### ✅ 기능정리
 > - **담당 기능 일람**
-> > Database 설계
+> > Database 설계 <br>
 > > REST API 설계
 > > > API Documentation
