@@ -1,2 +1,28 @@
-# Hackathon_Plogging
-서울 우먼테크 해커톤 참가 프로젝트
+# Seoul Ssudam - 서울쓰담 플로깅 서비스
+🏃‍♂️**서울 우먼테크 해커톤 참가 - '지속 가능한 미래도시' 프로젝트**
+
+## ☝ 개요
+#### ❓ 플로깅 :: 줍다라는 뜻의 스웨덴어 plocka upp과 jogging의 합성어. 조깅을 하면서 길가의 쓰레기를 수거하는, 운동과 자연보호활동을 결합한 새로운 활동을 말한다. <br><br>
+> ### ✅ 개발목적
+> - 지속 가능한 미래도시를 위해 서울시민이 이용할 수 있는 서비스를 구현한다.
+> - REST API를 직접 구성해보고 활용하는 것을 목적으로 한다.
+> ### ✅ 개발기간
+> - 2023. 07 ~ 2023. 08
+> ### ✅ 개발환경
+> ![win10 (2)](https://github.com/user-attachments/assets/81e8ee9b-e0c2-485f-8654-8f8258c20b3a)
+> ![java](https://github.com/user-attachments/assets/c02bc8da-8e4f-40e7-a04a-7adcb81d9ac4)
+> ![mysql](https://github.com/user-attachments/assets/c2ed37d2-c436-42f4-8648-9d59e2a03f7e)
+> ![spring (2)](https://github.com/user-attachments/assets/bc8564a3-907c-4d0e-a8c0-06f113220337)
+> !![image](https://github.com/user-attachments/assets/d71a9abe-edca-4303-9c29-bfe400b44b23)
+> ![jpa](https://github.com/user-attachments/assets/ae36b33a-067e-43dc-b781-9c93903b01d7)
+> ![intellij](https://github.com/user-attachments/assets/eaf02203-8172-4aaf-817a-bde77fcce8e0)
+> ![git (2)](https://github.com/user-attachments/assets/20e69a9f-271f-47bf-9980-d647085f943a)
+> - OS : **Windows 10**
+> - Language : **Java 11**
+> - RDBMS : **MySQL 8.0.3**
+> - Framwork : **Spring Boot 2.7.14**
+> - Authentication/Authorization : **JSON Web token**
+> - Object Relatrional Mapping : **JAVA Persistance API**
+> - IDE : **IntelliJ**
+> - Collaboration : **GitHub**
+
