@@ -8,6 +8,9 @@
 > - REST API를 직접 구성해보고 활용하는 것을 목적으로 한다.
 > ### ✅ 개발기간
 > - 2023. 07 ~ 2023. 08
+> ### ✅ 함께한 팀원
+> - @sj102300
+> - @meanyong
 > ### ✅ 개발환경
 > ![win10 (2)](https://github.com/user-attachments/assets/81e8ee9b-e0c2-485f-8654-8f8258c20b3a)
 > ![java](https://github.com/user-attachments/assets/c02bc8da-8e4f-40e7-a04a-7adcb81d9ac4)
