@@ -36,5 +36,6 @@
 >
 > ### ✅ 기능정리
 > - **담당 기능 일람**
-> - Database 설계
-> - REST API 설계
+> > Database 설계
+> > REST API 설계
+> > > API Documentation
