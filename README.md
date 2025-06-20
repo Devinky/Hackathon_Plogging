@@ -39,6 +39,5 @@
 >
 > ### ✅ 기능정리
 > - **담당 기능 일람**
-> > Database 설계 <br>
-> > REST API 설계
-> > > API Documentation
+> > 1. Database 설계 <br>
+> > 2. [REST API 설계](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document)
