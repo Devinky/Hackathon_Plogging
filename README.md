@@ -11,6 +11,7 @@
 > ### ✅ 함께한 팀원
 > - 이승주 [@sj102300](https://github.com/sj102300)
 > - 박민영 [@meanyong](http://github.com/meanyong)
+> - 허유랑<본인>
 > ### ✅ 개발환경
 > ![win10 (2)](https://github.com/user-attachments/assets/81e8ee9b-e0c2-485f-8654-8f8258c20b3a)
 > ![java](https://github.com/user-attachments/assets/c02bc8da-8e4f-40e7-a04a-7adcb81d9ac4)
@@ -40,4 +41,9 @@
 > ### ✅ 기능정리
 > - **담당 기능 일람**
 > > 1. Database 설계 <br>
-> > 2. [REST API 설계](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document)
+> > 2. REST API 설계<br>
+> > > 2-1) [회원가입 ▪ 로그인 API](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document#%EF%B8%8Fuser-sign-api)<br>
+> > > 2-2) [회원정보 조회 ▪ 수정 ▪ 탈퇴 API](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document#%EF%B8%8Fuser-personal-api)<br>
+> > > 2-3) [플로깅 기록 생성 API](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document#%EF%B8%8Fplogging-record-api)<br>
+> > > 2-4) 플로깅 기록 조회 ▪ 삭제 API<br>
+##
