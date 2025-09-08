@@ -36,7 +36,7 @@
 > ![서울쓰담 플로우차트 drawio](https://github.com/user-attachments/assets/9dd0dce9-c3ec-436e-a218-405de2d95dba)
 >
 > - **Database ERD**
-> ![서울쓰담ERD](https://github.com/user-attachments/assets/c2b80646-7d41-4062-98f3-eef849439ad9)
+> <img width="758" height="900" alt="ERD (2)" src="https://github.com/user-attachments/assets/c207a5c2-1d16-42d5-9e99-e11d90aeee21" />
 >
 > ### ✅ 기능정리
 > - **담당 기능 일람**
