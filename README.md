@@ -41,9 +41,12 @@
 > ### ✅ 기능정리
 > - **담당 기능 일람**
 > > 1. Database 설계 <br>
-> > 2. REST API 설계<br>
-> > > 2-1) [회원가입 ▪ 로그인 API](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document#%EF%B8%8Fuser-sign-api)<br>
-> > > 2-2) [회원정보 조회 ▪ 수정 ▪ 탈퇴 API](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document#%EF%B8%8Fuser-personal-api)<br>
-> > > 2-3) [플로깅 기록 생성 API](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document#%EF%B8%8Fplogging-record-api)<br>
-> > > 2-4) [플로깅 기록 조회 ▪ 삭제 API](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document#%EF%B8%8Fplogging-record-view-api)<br>
+> > 2. JSON Web Token 보안 설계 <br>
+> >  👉 JWT 문서
+> > 3. REST API 설계 <br>
+> >  3-1) 회원가입 ▪ 로그인 API<br>
+> >  3-2) 회원정보 조회 ▪ 수정 ▪ 탈퇴 API<br>
+> >  3-3) 플로깅 기록 생성 API<br>
+> >  3-4) 플로깅 기록 조회 ▪ 삭제 API<br>
+> > 👉 [API 문서](https://github.com/Devinky/Hackathon_Plogging/wiki/API-Document)
 ##
